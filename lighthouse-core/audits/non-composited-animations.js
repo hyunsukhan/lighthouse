@@ -100,17 +100,19 @@ class NonCompositedAnimations extends Audit {
       }
     }
 
-    /** @type Map<LH.Audit.Details.NodeValue, {name: string, failureReasons: string[]}[]> */
+    /** @type Map<LH.Audit.Details.NodeValue, {name?: string, failureReasons: string[]}[]> */
     const elementAnimations = new Map();
     animationPairs.forEach(pair => {
       if (!pair.begin ||
           !pair.begin.args.data ||
           !pair.begin.args.data.nodeId ||
+          !pair.begin.args.data.id ||
           !pair.status ||
           !pair.status.args.data ||
           !pair.status.args.data.compositeFailed) return;
 
       const nodeId = pair.begin.args.data.nodeId;
+      const animationId = pair.begin.args.data.id;
       const element = animatedElements.find(e => e.nodeId === nodeId);
       if (!element) return;
       /** @type LH.Audit.Details.NodeValue */
@@ -126,8 +128,8 @@ class NonCompositedAnimations extends Audit {
       const failureReasons = getActionableFailureReasons(compositeFailed);
       if (failureReasons.length === 0) return;
 
-      // TODO: Resolve animation name
-      const name = '~placeholder~';
+      const animation = element.animations && element.animations.find(a => a.id === animationId);
+      const name = animation && animation.name;
       const data = elementAnimations.get(node) || [];
       data.push({name, failureReasons});
       elementAnimations.set(node, data);

@@ -500,6 +500,7 @@ declare global {
         score?: number;
         boundingRect: Rect;
         nodeId?: number;
+        animations?: {id: string, name?: string}[];
       }
 
       export interface ViewportDimensions {
