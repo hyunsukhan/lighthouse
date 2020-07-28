@@ -486,7 +486,7 @@ function parseUIStrings(sourceStr, liveUIStrings) {
     // Use live message to avoid having to e.g. concat strings broken into parts.
     const message = liveUIStrings[key];
 
-    // @ts-ignore - Not part of the public tsc interface yet.
+    // @ts-expect-error - Not part of the public tsc interface yet.
     const jsDocComments = tsc.getJSDocCommentsAndTags(property);
     const {description, examples} = computeDescription(jsDocComments[0], message);
 
@@ -603,7 +603,7 @@ function writeStringsToCtcFiles(locale, strings) {
   fs.writeFileSync(fullPath, JSON.stringify(output, null, 2) + '\n');
 }
 
-// @ts-ignore Test if called from the CLI or as a module.
+// @ts-expect-error Test if called from the CLI or as a module.
 if (require.main === module) {
   const coreStrings = collectAllStringsInDir(path.join(LH_ROOT, 'lighthouse-core'));
   console.log('Collected from LH core!');

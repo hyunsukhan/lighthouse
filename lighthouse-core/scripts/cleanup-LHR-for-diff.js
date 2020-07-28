@@ -34,9 +34,9 @@ function cleanAndFormatLHR(lhrString) {
   // Set timing values, which change from run to run, to predictable values
   lhr.timing.total = 12345.6789;
   lhr.timing.entries.forEach(entry => {
-    // @ts-ignore - write to readonly property
+    // @ts-expect-error - write to readonly property
     entry.duration = 100;
-    // @ts-ignore - write to readonly property
+    // @ts-expect-error - write to readonly property
     entry.startTime = 0; // Not realsitic, but avoids a lot of diff churn
   });
 

@@ -147,7 +147,7 @@ class GithubApi {
       // not return a 304 and so will be overwritten.
       return idbKeyval.set(id, response).then(_ => {
         logger.hide();
-        // @ts-ignore - TODO(bckenny): tsc unable to flatten promise chain here
+        // @ts-expect-error - TODO(bckenny): tsc unable to flatten promise chain here
         return response.content;
       });
     });

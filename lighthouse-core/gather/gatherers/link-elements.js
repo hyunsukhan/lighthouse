@@ -54,7 +54,7 @@ function getCrossoriginFromHeader(value) {
 /* istanbul ignore next */
 function getLinkElementsInDOM() {
   /** @type {Array<HTMLOrSVGElement>} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const browserElements = getElementsInDocument('link'); // eslint-disable-line no-undef
   /** @type {LH.Artifacts['LinkElements']} */
   const linkElements = [];
@@ -64,11 +64,11 @@ function getLinkElementsInDOM() {
     // https://github.com/GoogleChrome/lighthouse/issues/9764
     if (!(link instanceof HTMLLinkElement)) continue;
 
-    // @ts-ignore - put into scope via stringification
+    // @ts-expect-error - put into scope via stringification
     const nodePath = getNodePath(link); // eslint-disable-line no-undef
-    // @ts-ignore - getNodeSelector put into scope via stringification
+    // @ts-expect-error - getNodeSelector put into scope via stringification
     const selector = getNodeSelector(link); // eslint-disable-line no-undef
-    // @ts-ignore - getNodeLabel put into scope via stringification
+    // @ts-expect-error - getNodeLabel put into scope via stringification
     const nodeLabel = getNodeLabel(link); // eslint-disable-line no-undef
 
     const hrefRaw = link.getAttribute('href') || '';

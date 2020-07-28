@@ -35,7 +35,7 @@ const locales = fs.readdirSync(__dirname + '/../lighthouse-core/lib/i18n/locales
 
 // HACK: manually include the lighthouse-plugin-publisher-ads audits.
 /** @type {Array<string>} */
-// @ts-ignore
+// @ts-expect-error
 const pubAdsAudits = require('lighthouse-plugin-publisher-ads/plugin.js').audits.map(a => a.path);
 
 /** @param {string} file */
@@ -84,7 +84,7 @@ async function browserifyFile(entryPath, distPath) {
 
   // Don't include locales in DevTools.
   if (isDevtools(entryPath)) {
-    // @ts-ignore bundle.ignore does accept an array of strings.
+    // @ts-expect-error bundle.ignore does accept an array of strings.
     bundle.ignore(locales);
   }
 
@@ -171,7 +171,7 @@ async function cli(argv) {
   build(entryPath, distPath);
 }
 
-// @ts-ignore Test if called from the CLI or as a module.
+// @ts-expect-error Test if called from the CLI or as a module.
 if (require.main === module) {
   cli(process.argv);
 } else {

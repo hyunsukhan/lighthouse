@@ -15,11 +15,11 @@ const ChromeLauncher = require('chrome-launcher');
 const ChromeProtocol = require('../../../../lighthouse-core/gather/connections/cri.js');
 
 // Load bundle, which creates a `global.runBundledLighthouse`.
-// @ts-ignore - file won't exist until `yarn build-all`, but not used for types anyways.
+// @ts-ignore - file exists if `yarn build-all` is run, but not used for types anyways.
 require('../../../../dist/lighthouse-dt-bundle.js'); // eslint-disable-line
 
 /** @type {import('../../../../lighthouse-core/index.js')} */
-// @ts-ignore - not worth giving test global an actual type.
+// @ts-expect-error - not worth giving test global an actual type.
 const lighthouse = global.runBundledLighthouse;
 
 /**

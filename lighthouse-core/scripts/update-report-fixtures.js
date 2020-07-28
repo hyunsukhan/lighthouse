@@ -41,7 +41,7 @@ async function update(artifactName) {
     }
     const finalArtifacts = oldArtifacts;
     const newArtifact = newArtifacts[artifactName];
-    // @ts-ignore tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
+    // @ts-expect-error tsc can't yet express that artifactName is only a single type in each iteration, not a union of types.
     finalArtifacts[artifactName] = newArtifact;
     await assetSaver.saveArtifacts(finalArtifacts, artifactPath);
   }

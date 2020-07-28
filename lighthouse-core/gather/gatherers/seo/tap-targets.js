@@ -213,7 +213,7 @@ function gatherTapTargets() {
   window.scrollTo(0, 0);
 
   /** @type {HTMLElement[]} */
-  // @ts-ignore - getElementsInDocument put into scope via stringification
+  // @ts-expect-error - getElementsInDocument put into scope via stringification
   const tapTargetElements = getElementsInDocument(tapTargetsSelector);
 
   /** @type {{
@@ -283,14 +283,14 @@ function gatherTapTargets() {
   for (const {tapTargetElement, visibleClientRects} of tapTargetsWithVisibleClientRects) {
     targets.push({
       clientRects: visibleClientRects,
-      // @ts-ignore - getBoundingClientRect put into scope via stringification
+      // @ts-expect-error - getBoundingClientRect put into scope via stringification
       boundingRect: getBoundingClientRect(tapTargetElement),
       snippet: truncate(tapTargetElement.outerHTML, 300),
-      // @ts-ignore - getNodePath put into scope via stringification
+      // @ts-expect-error - getNodePath put into scope via stringification
       path: getNodePath(tapTargetElement),
-      // @ts-ignore - getNodeSelector put into scope via stringification
+      // @ts-expect-error - getNodeSelector put into scope via stringification
       selector: getNodeSelector(tapTargetElement),
-      // @ts-ignore - getNodeLabel put into scope via stringification
+      // @ts-expect-error - getNodeLabel put into scope via stringification
       nodeLabel: getNodeLabel(tapTargetElement),
       href: /** @type {HTMLAnchorElement} */(tapTargetElement)['href'] || '',
     });

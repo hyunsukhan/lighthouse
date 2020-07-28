@@ -20,7 +20,7 @@ const SITE_INDEX_DIR = path.dirname(SITE_INDEX_PATH);
 const RUN_ONCE_PATH = path.join(__dirname, 'run-once.js');
 
 const siteIndex = require(SITE_INDEX_PATH);
-// @ts-ignore - over-aggressive implicit any on site
+// @ts-expect-error - over-aggressive implicit any on site
 const site = siteIndex.sites.find(site => site.url === INPUT_URL);
 if (!site) throw new Error(`Could not find with site URL ${INPUT_URL}`);
 

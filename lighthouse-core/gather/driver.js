@@ -293,7 +293,7 @@ class Driver {
       this._networkStatusMonitor.dispatch(event);
     }
 
-    // @ts-ignore TODO(bckenny): tsc can't type event.params correctly yet,
+    // @ts-expect-error TODO(bckenny): tsc can't type event.params correctly yet,
     // typing as property of union instead of narrowing from union of
     // properties. See https://github.com/Microsoft/TypeScript/pull/22348.
     this._eventEmitter.emit(event.method, event.params);

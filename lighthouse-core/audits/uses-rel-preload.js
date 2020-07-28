@@ -172,7 +172,7 @@ class UsesRelPreloadAudit extends Audit {
     // Once we've modified the dependencies, simulate the new graph with flexible ordering.
     const simulationAfterChanges = simulator.simulate(modifiedGraph, {flexibleOrdering: true});
     const originalNodesByRecord = Array.from(simulationBeforeChanges.nodeTimings.keys())
-        // @ts-ignore we don't care if all nodes without a record collect on `undefined`
+        // @ts-expect-error we don't care if all nodes without a record collect on `undefined`
         .reduce((map, node) => map.set(node.record, node), new Map());
 
     const results = [];

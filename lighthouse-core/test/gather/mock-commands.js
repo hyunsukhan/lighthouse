@@ -54,7 +54,7 @@ function createMockSendCommandFn() {
       mockResponses.splice(indexOfResponse, 1);
       const returnValue = typeof response === 'function' ? response(...args) : response;
       if (delay) return new Promise(resolve => setTimeout(() => resolve(returnValue), delay));
-      // @ts-ignore: Some covariant type stuff doesn't work here. idk, I'm not a type scientist.
+      // @ts-expect-error: Some covariant type stuff doesn't work here. idk, I'm not a type scientist.
       return Promise.resolve(returnValue);
     });
 

@@ -63,7 +63,7 @@ function createDecomposedPromise() {
     resolve = r1;
     reject = r2;
   });
-  // @ts-ignore: Ignore 'unused' error.
+  // @ts-expect-error: Ignore 'unused' error.
   return {promise, resolve, reject};
 }
 
@@ -138,13 +138,13 @@ let driver;
 let connectionStub;
 
 beforeEach(() => {
-  // @ts-ignore - connectionStub has a mocked version of sendCommand implemented in each test
+  // @ts-expect-error - connectionStub has a mocked version of sendCommand implemented in each test
   connectionStub = new Connection();
-  // @ts-ignore
+  // @ts-expect-error
   connectionStub.sendCommand = cmd => {
     throw new Error(`${cmd} not implemented`);
   };
-  // @ts-ignore - driver has a mocked version of on/once implemented in each test
+  // @ts-expect-error - driver has a mocked version of on/once implemented in each test
   driver = new Driver(connectionStub);
 });
 
@@ -205,7 +205,7 @@ describe('.getRequestContent', () => {
   it('throws if getRequestContent takes too long', async () => {
     const mockTimeout = 5000;
     const driverTimeout = 1000;
-    // @ts-ignore
+    // @ts-expect-error
     connectionStub.sendCommand = jest.fn()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
@@ -308,7 +308,7 @@ describe('.evaluateAsync', () => {
 describe('.sendCommand', () => {
   it('.sendCommand timesout when commands take too long', async () => {
     const mockTimeout = 5000;
-    // @ts-ignore
+    // @ts-expect-error
     connectionStub.sendCommand = jest.fn()
       .mockImplementation(() => new Promise(r => setTimeout(r, mockTimeout)));
 
@@ -529,7 +529,7 @@ describe('.gotoURL', () => {
         driver._waitForNetworkIdle = createMockWaitForFn();
         driver._waitForCPUIdle = createMockWaitForFn();
 
-        // @ts-ignore - dynamic property access, tests will definitely fail if the property were to change
+        // @ts-expect-error - dynamic property access, tests will definitely fail if the property were to change
         const waitForResult = driver[`_waitFor${name}`];
         const otherWaitForResults = [
           driver._waitForFcp,
@@ -974,7 +974,7 @@ describe('Multi-target management', () => {
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: '123',
-      // @ts-ignore: Ignore partial targetInfo.
+      // @ts-expect-error: Ignore partial targetInfo.
       targetInfo: {type: 'iframe'},
     });
     await flushAllTimersAndMicrotasks();
@@ -992,7 +992,7 @@ describe('Multi-target management', () => {
 
     driver._eventEmitter.emit('Target.attachedToTarget', {
       sessionId: 'SW1',
-      // @ts-ignore: Ignore partial targetInfo.
+      // @ts-expect-error: Ignore partial targetInfo.
       targetInfo: {type: 'service_worker'},
     });
     await flushAllTimersAndMicrotasks();

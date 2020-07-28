@@ -83,7 +83,7 @@ class FontDisplay extends Audit {
 
         // Finally convert the raw font URLs to the absolute URLs and add them to the set.
         const relativeURLs = rawFontURLs
-          // @ts-ignore - guaranteed to match from previous regex, pull URL group out
+          // @ts-expect-error - guaranteed to match from previous regex, pull URL group out
           .map(s => s.match(CSS_URL_REGEX)[1].trim())
           .map(s => {
             // remove any quotes surrounding the URL

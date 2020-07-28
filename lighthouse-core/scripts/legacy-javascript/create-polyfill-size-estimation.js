@@ -83,7 +83,7 @@ async function main() {
   const bundleMap = JSON.parse(fs.readFileSync(bundlePath + '.map', 'utf-8'));
   /** @type {Pick<LH.Artifacts, 'ScriptElements'|'SourceMaps'>} */
   const artifacts = {
-    // @ts-ignore don't need most properties on ScriptElement.
+    // @ts-expect-error don't need most properties on ScriptElement.
     ScriptElements: [{requestId: '', src: '', content: bundleContents}],
     SourceMaps: [{scriptUrl: '', map: bundleMap}],
   };

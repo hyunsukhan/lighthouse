@@ -253,12 +253,12 @@ class PageDependencyGraph {
 
         switch (evt.name) {
           case 'TimerInstall':
-            // @ts-ignore - 'TimerInstall' event means timerId exists.
+            // @ts-expect-error - 'TimerInstall' event means timerId exists.
             timers.set(evt.args.data.timerId, node);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
           case 'TimerFire': {
-            // @ts-ignore - 'TimerFire' event means timerId exists.
+            // @ts-expect-error - 'TimerFire' event means timerId exists.
             const installer = timers.get(evt.args.data.timerId);
             if (!installer || installer.endTime > node.startTime) break;
             installer.addDependent(node);
@@ -273,17 +273,17 @@ class PageDependencyGraph {
 
           case 'EvaluateScript':
             addDependencyOnFrame(node, evt.args.data.frame);
-            // @ts-ignore - 'EvaluateScript' event means argsUrl is defined.
+            // @ts-expect-error - 'EvaluateScript' event means argsUrl is defined.
             addDependencyOnUrl(node, argsUrl);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
 
           case 'XHRReadyStateChange':
             // Only create the dependency if the request was completed
-            // @ts-ignore - 'XHRReadyStateChange' event means readyState is defined.
+            // 'XHRReadyStateChange' event means readyState is defined.
             if (evt.args.data.readyState !== 4) break;
 
-            // @ts-ignore - 'XHRReadyStateChange' event means argsUrl is defined.
+            // @ts-expect-error - 'XHRReadyStateChange' event means argsUrl is defined.
             addDependencyOnUrl(node, argsUrl);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
@@ -291,19 +291,19 @@ class PageDependencyGraph {
           case 'FunctionCall':
           case 'v8.compile':
             addDependencyOnFrame(node, evt.args.data.frame);
-            // @ts-ignore - events mean argsUrl is defined.
+            // @ts-expect-error - events mean argsUrl is defined.
             addDependencyOnUrl(node, argsUrl);
             break;
 
           case 'ParseAuthorStyleSheet':
             addDependencyOnFrame(node, evt.args.data.frame);
-            // @ts-ignore - 'ParseAuthorStyleSheet' event means styleSheetUrl is defined.
+            // @ts-expect-error - 'ParseAuthorStyleSheet' event means styleSheetUrl is defined.
             addDependencyOnUrl(node, evt.args.data.styleSheetUrl);
             break;
 
           case 'ResourceSendRequest':
             addDependencyOnFrame(node, evt.args.data.frame);
-            // @ts-ignore - 'ResourceSendRequest' event means requestId is defined.
+            // @ts-expect-error - 'ResourceSendRequest' event means requestId is defined.
             addDependentNetworkRequest(node, evt.args.data.requestId);
             stackTraceUrls.forEach(url => addDependencyOnUrl(node, url));
             break;
@@ -432,7 +432,7 @@ class PageDependencyGraph {
       const length = Math.ceil((node.endTime - node.startTime) / timePerCharacter);
       const bar = padRight('', offset) + padRight('', length, '=');
 
-      // @ts-ignore -- disambiguate displayName from across possible Node types.
+      // @ts-expect-error -- disambiguate displayName from across possible Node types.
       const displayName = node.record ? node.record.url : node.type;
       // eslint-disable-next-line
       console.log(padRight(bar, widthInCharacters), `| ${displayName.slice(0, 30)}`);

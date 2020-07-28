@@ -17,7 +17,7 @@
  */
 
 const path = require('path');
-// @ts-ignore - We don't really need types for this
+// @ts-expect-error - We don't really need types for this
 const colors = require('colors');
 const LegacyJavascript = require('../../audits/byte-efficiency/legacy-javascript.js');
 

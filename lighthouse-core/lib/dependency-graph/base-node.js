@@ -129,7 +129,7 @@ class BaseNode {
    * @param {Node} node
    */
   addDependency(node) {
-    // @ts-ignore - in checkJs, ts doesn't know that CPUNode and NetworkNode *are* BaseNodes.
+    // @ts-expect-error - in checkJs, ts doesn't know that CPUNode and NetworkNode *are* BaseNodes.
     if (node === this) throw new Error('Cannot add dependency on itself');
 
     if (this._dependencies.includes(node)) {
@@ -264,13 +264,13 @@ class BaseNode {
     }
 
     /** @type {Node[][]} */
-    // @ts-ignore - only traverses graphs of Node, so force tsc to treat `this` as one
+    // @ts-expect-error - only traverses graphs of Node, so force tsc to treat `this` as one
     const queue = [[this]];
     const visited = new Set([this.id]);
 
     while (queue.length) {
       /** @type {Node[]} */
-      // @ts-ignore - queue has length so it's guaranteed to have an item
+      // @ts-expect-error - queue has length so it's guaranteed to have an item
       const traversalPath = queue.shift();
       const node = traversalPath[0];
       callback(node, traversalPath);
@@ -306,7 +306,7 @@ class BaseNode {
     while (toVisit.length) {
       // Get the last node in the stack (DFS uses stack, not queue)
       /** @type {Node} */
-      // @ts-ignore - toVisit has length so it's guaranteed to have an item
+      // @ts-expect-error - toVisit has length so it's guaranteed to have an item
       const currentNode = toVisit.pop();
 
       // We've hit a cycle if the node we're visiting is in our current dependency path
@@ -315,7 +315,7 @@ class BaseNode {
       if (visited.has(currentNode)) continue;
 
       // Since we're visiting this node, clear out any nodes in our path that we had to backtrack
-      // @ts-ignore
+      // @ts-expect-error
       while (currentPath.length > depthAdded.get(currentNode)) currentPath.pop();
 
       // Update our data structures to reflect that we're adding this node to our path

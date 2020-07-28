@@ -110,12 +110,10 @@ async function createVariant(options) {
 
     legacyJavascriptResults = await getLegacyJavascriptResults(code, map, {sourceMaps: true});
     fs.writeFileSync(`${dir}/legacy-javascript.json`,
-      // @ts-ignore: Items will exist.
       JSON.stringify(legacyJavascriptResults.items, null, 2));
 
     legacyJavascriptResults = await getLegacyJavascriptResults(code, map, {sourceMaps: false});
     fs.writeFileSync(`${dir}/legacy-javascript-nomaps.json`,
-      // @ts-ignore: Items will exist.
       JSON.stringify(legacyJavascriptResults.items, null, 2));
   }
 }
@@ -144,13 +142,13 @@ function getLegacyJavascriptResults(code, map, {sourceMaps}) {
       [LegacyJavascript.DEFAULT_PASS]: devtoolsLogs,
     },
     ScriptElements: [
-      // @ts-ignore - partial ScriptElement excluding unused DOM properties
+      // @ts-expect-error - partial ScriptElement excluding unused DOM properties
       {src: scriptUrl, requestId: '1000.2', content: code},
     ],
     SourceMaps: [],
   };
   if (sourceMaps) artifacts.SourceMaps = [{scriptUrl, map}];
-  // @ts-ignore: partial Artifacts.
+  // @ts-expect-error: partial Artifacts.
   return LegacyJavascript.audit_(artifacts, networkRecords, {
     computedCache: new Map(),
   });

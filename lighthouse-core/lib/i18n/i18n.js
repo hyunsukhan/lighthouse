@@ -25,10 +25,10 @@ const MESSAGE_INSTANCE_ID_QUICK_REGEX = / # \d+$/;
   // See https://nodejs.org/api/intl.html#intl_options_for_building_node_js
 
   // Conditionally polyfills itself. Bundler removes this dep, so this will be a no-op in browsers.
-  // @ts-ignore
+  // @ts-expect-error
   require('intl-pluralrules');
 
-  // @ts-ignore
+  // @ts-expect-error
   const IntlPolyfill = require('intl');
 
   // The bundler also removes this dep, so there's nothing to do if it's empty.

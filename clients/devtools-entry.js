@@ -59,26 +59,25 @@ if (typeof module !== 'undefined' && module.exports) {
   // work for LH because of https://github.com/browserify/browserify/issues/968
   // Instead, since this file is only ever run in node for testing, expose a
   // bundle entry point as global.
-  // @ts-ignore
+  // @ts-expect-error
   global.runBundledLighthouse = lighthouse;
 }
 
 // Expose only in DevTools' worker
-// @ts-ignore
 if (typeof self !== 'undefined') {
   // TODO: refactor and delete `global.isDevtools`.
   global.isDevtools = true;
 
-  // @ts-ignore
+  // @ts-expect-error
   self.setUpWorkerConnection = setUpWorkerConnection;
-  // @ts-ignore
+  // @ts-expect-error
   self.runLighthouse = lighthouse;
-  // @ts-ignore
+  // @ts-expect-error
   self.createConfig = createConfig;
-  // @ts-ignore
+  // @ts-expect-error
   self.listenForStatus = listenForStatus;
-  // @ts-ignore
+  // @ts-expect-error
   self.registerLocaleData = registerLocaleData;
-  // @ts-ignore
+  // @ts-expect-error
   self.lookupLocale = lookupLocale;
 }

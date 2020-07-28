@@ -38,15 +38,15 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
  * @return {Array<string>}
  */
 function importValidLangs() {
-  // @ts-ignore - global switcheroo to load axe valid-langs
+  // @ts-expect-error - global switcheroo to load axe valid-langs
   const axeCache = global.axe;
-  // @ts-ignore
+  // @ts-expect-error
   global.axe = {utils: {}};
-  // @ts-ignore
+  // @ts-expect-error
   require('axe-core/lib/core/utils/valid-langs.js');
-  // @ts-ignore
+  // @ts-expect-error
   const validLangs = global.axe.utils.validLangs();
-  // @ts-ignore
+  // @ts-expect-error
   global.axe = axeCache;
 
   return validLangs;

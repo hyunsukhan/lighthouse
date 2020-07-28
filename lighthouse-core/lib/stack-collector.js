@@ -46,7 +46,7 @@ async function detectLibraries() {
   // d41d8cd98f00b204e9800998ecf8427e_ is a consistent prefix used by the detect libraries
   // see https://github.com/HTTPArchive/httparchive/issues/77#issuecomment-291320900
   /** @type {Record<string, JSLibraryDetectorTest>} */
-  // @ts-ignore - injected libDetectorSource var
+  // @ts-expect-error - injected libDetectorSource var
   const libraryDetectorTests = d41d8cd98f00b204e9800998ecf8427e_LibraryDetectorTests; // eslint-disable-line
 
   for (const [name, lib] of Object.entries(libraryDetectorTests)) {

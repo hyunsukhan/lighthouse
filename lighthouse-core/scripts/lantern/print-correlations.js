@@ -193,7 +193,7 @@ function findAndPrintFixesRegressions() {
       chalk.gray('(real)'),
       entry.actual,
       chalk.gray('(cur)'),
-      // @ts-ignore - baseline always exists at this point
+      // @ts-expect-error - baseline always exists at this point
       entry.baseline.actual,
       chalk.gray('(prev)')
     );
@@ -294,7 +294,7 @@ const printBucket = (label, bucketFilterFn, opts) => {
   console.log(
     `${label}:`.padEnd(10),
     actual.toString().padEnd(5),
-    // @ts-ignore - overly aggressive no implicit any
+    // @ts-expect-error - overly aggressive no implicit any
     toBaselineDiffString(actual, baseline, {...opts, format: x => x.toString()})
   );
 };

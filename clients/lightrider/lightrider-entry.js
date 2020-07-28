@@ -101,6 +101,6 @@ if (typeof module !== 'undefined' && module.exports) {
 
 // Expose on window for browser-residing consumers of file.
 if (typeof window !== 'undefined') {
-  // @ts-ignore
+  // @ts-expect-error - not worth typing a property on `window`.
   window.runLighthouseInLR = runLighthouseInLR;
 }

@@ -18,6 +18,6 @@ module.exports = {
       'redirects',
     ],
     // Use provided throttling method to test usage of correct navStart.
-    throttlingMethod: 'provided',
+    throttlingMethod: /** @type {'provided'} */ ('provided'),
   },
 };

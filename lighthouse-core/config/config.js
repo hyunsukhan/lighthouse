@@ -190,7 +190,7 @@ function cleanFlagsForSettings(flags = {}) {
 
   for (const key of Object.keys(flags)) {
     if (key in constants.defaultSettings) {
-      // @ts-ignore tsc can't yet express that key is only a single type in each iteration, not a union of types.
+      // @ts-expect-error tsc can't yet express that key is only a single type in each iteration, not a union of types.
       settings[key] = flags[key];
     }
   }
@@ -297,10 +297,12 @@ function deepCloneConfigJson(json) {
   return cloned;
 }
 
+/**
+ * @implements {LH.Config.Json}
+ */
 class Config {
   /**
    * @constructor
-   * @implements {LH.Config.Json}
    * @param {LH.Config.Json=} configJSON
    * @param {LH.Flags=} flags
    */
@@ -355,9 +357,6 @@ class Config {
     assertValidPasses(this.passes, this.audits);
     assertValidCategories(this.categories, this.audits, this.groups);
 
-    // TODO(bckenny): until tsc adds @implements support, assert that Config is a ConfigJson.
-    /** @type {LH.Config.Json} */
-    const configJson = this; // eslint-disable-line no-unused-vars
     log.timeEnd(status);
   }
 
@@ -373,10 +372,10 @@ class Config {
       for (const pass of jsonConfig.passes) {
         for (const gathererDefn of pass.gatherers) {
           gathererDefn.implementation = undefined;
-          // @ts-ignore Breaking the Config.GathererDefn type.
+          // @ts-expect-error Breaking the Config.GathererDefn type.
           gathererDefn.instance = undefined;
           if (Object.keys(gathererDefn.options).length === 0) {
-            // @ts-ignore Breaking the Config.GathererDefn type.
+            // @ts-expect-error Breaking the Config.GathererDefn type.
             gathererDefn.options = undefined;
           }
         }
@@ -385,10 +384,10 @@ class Config {
 
     if (jsonConfig.audits) {
       for (const auditDefn of jsonConfig.audits) {
-        // @ts-ignore Breaking the Config.AuditDefn type.
+        // @ts-expect-error Breaking the Config.AuditDefn type.
         auditDefn.implementation = undefined;
         if (Object.keys(auditDefn.options).length === 0) {
-          // @ts-ignore Breaking the Config.AuditDefn type.
+          // @ts-expect-error Breaking the Config.AuditDefn type.
           auditDefn.options = undefined;
         }
       }

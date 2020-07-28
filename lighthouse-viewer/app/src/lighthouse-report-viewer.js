@@ -180,7 +180,7 @@ class LighthouseReportViewer {
     }
 
     // Install as global for easier debugging
-    // @ts-ignore
+    // @ts-expect-error
     window.__LIGHTHOUSE_JSON__ = json;
     // eslint-disable-next-line no-console
     console.log('window.__LIGHTHOUSE_JSON__', json);

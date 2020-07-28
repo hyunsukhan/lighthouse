@@ -19,10 +19,13 @@ async function run() {
   const traces = {defaultPass: require(tracePath)};
   const devtoolsLogs = {defaultPass: require(path.resolve(process.cwd(), process.argv[3]))};
   const artifacts = {traces, devtoolsLogs};
-
   const context = {computedCache: new Map(), settings: {locale: 'en-us'}};
-  // @ts-ignore - We don't need the full artifacts
+
+  // @ts-expect-error - We don't need the full artifacts or context.
   const result = await PredictivePerf.audit(artifacts, context);
+  if (!result.details || result.details.type !== 'debugdata') {
+    throw new Error('Unexpected audit details from PredictivePerf');
+  }
   process.stdout.write(JSON.stringify(result.details.items[0], null, 2));
 
   // Dump the TTI graph with simulated timings to a trace if LANTERN_DEBUG is enabled

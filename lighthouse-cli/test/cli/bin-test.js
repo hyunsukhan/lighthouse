@@ -147,7 +147,7 @@ describe('CLI bin', function() {
 
   describe('extraHeaders', () => {
     it('should convert extra headers to object', async () => {
-      // @ts-ignore - see TODO: in bin.js
+      // @ts-expect-error - see TODO: in bin.js
       cliFlags = {...cliFlags, extraHeaders: '{"foo": "bar"}'};
       await bin.begin();
 
@@ -156,7 +156,7 @@ describe('CLI bin', function() {
 
     it('should read extra headers from file', async () => {
       const headersFile = require.resolve('../fixtures/extra-headers/valid.json');
-      // @ts-ignore - see TODO: in bin.js
+      // @ts-expect-error - see TODO: in bin.js
       cliFlags = {...cliFlags, extraHeaders: headersFile};
       await bin.begin();
 

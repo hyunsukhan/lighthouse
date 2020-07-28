@@ -308,6 +308,7 @@ declare global {
           url?: string;
           is_main_frame?: boolean;
           cumulative_score?: number;
+          id?: string;
           nodeId?: number;
           impacted_nodes?: Array<{
             node_id: number,

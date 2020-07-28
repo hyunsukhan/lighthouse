@@ -135,9 +135,14 @@ class RenderBlockingResources extends Audit {
     const wastedCssBytes = await RenderBlockingResources.computeWastedCSSBytes(artifacts, context);
 
     const metricSettings = {throttlingMethod: 'simulate'};
+
+    /** @type {LH.Artifacts.MetricComputationData} */
+    // @ts-expect-error - TODO(bckenny): allow optional `throttling` settings
     const metricComputationData = {trace, devtoolsLog, simulator, settings: metricSettings};
-    // @ts-ignore - TODO(bckenny): allow optional `throttling` settings
-    const fcpSimulation = await FirstContentfulPaint.request(metricComputationData, context);
+
+    // Cast to just `LanternMetric` since we explicitly set `throttlingMethod: 'simulate'`.
+    const fcpSimulation = /** @type {LH.Artifacts.LanternMetric} */
+      (await FirstContentfulPaint.request(metricComputationData, context));
     const fcpTsInMs = traceOfTab.timestamps.firstContentfulPaint / 1000;
 
     const nodesByUrl = getNodesAndTimingByUrl(fcpSimulation.optimisticEstimate.nodeTimings);

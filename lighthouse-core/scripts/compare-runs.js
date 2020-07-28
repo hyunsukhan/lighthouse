@@ -291,7 +291,7 @@ function filter(results) {
 
     for (const propName of Object.keys(result)) {
       if (reportExcludeRegex && reportExcludeRegex.test(propName)) {
-        // @ts-ignore: propName is a key.
+        // @ts-expect-error: propName is a key.
         delete result[propName];
       }
     }
@@ -368,9 +368,9 @@ function compare() {
 
   const sortByKey = `${argv.deltaPropertySort} Δ`;
   results.sort((a, b) => {
-    // @ts-ignore - shhh tsc.
+    // @ts-expect-error - shhh tsc.
     let aValue = a[sortByKey];
-    // @ts-ignore - shhh tsc.
+    // @ts-expect-error - shhh tsc.
     let bValue = b[sortByKey];
 
     // Always put the keys missing a result at the bottom of the table.

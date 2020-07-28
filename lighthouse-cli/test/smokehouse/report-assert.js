@@ -277,9 +277,9 @@ function isPlainObject(obj) {
  * @param {Comparison} assertion
  */
 function reportAssertion(localConsole, assertion) {
-  // @ts-ignore - this doesn't exist now but could one day, so try not to break the future
+  // @ts-expect-error - this doesn't exist now but could one day, so try not to break the future
   const _toJSON = RegExp.prototype.toJSON;
-  // @ts-ignore
+  // @ts-expect-error
   // eslint-disable-next-line no-extend-native
   RegExp.prototype.toJSON = RegExp.prototype.toString;
 
@@ -312,7 +312,7 @@ function reportAssertion(localConsole, assertion) {
     }
   }
 
-  // @ts-ignore
+  // @ts-expect-error
   // eslint-disable-next-line no-extend-native
   RegExp.prototype.toJSON = _toJSON;
 }

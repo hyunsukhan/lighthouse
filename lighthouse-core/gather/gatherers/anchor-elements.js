@@ -37,17 +37,17 @@ function collectAnchorElements() {
   }
 
   /** @type {Array<HTMLAnchorElement|SVGAElement>} */
-  // @ts-ignore - put into scope via stringification
+  // @ts-expect-error - put into scope via stringification
   const anchorElements = getElementsInDocument('a'); // eslint-disable-line no-undef
 
   return anchorElements.map(node => {
-    // @ts-ignore - put into scope via stringification
+    // @ts-expect-error - put into scope via stringification
     const outerHTML = getOuterHTMLSnippet(node); // eslint-disable-line no-undef
-    // @ts-ignore - put into scope via stringification
+    // @ts-expect-error - put into scope via stringification
     const nodePath = getNodePath(node); // eslint-disable-line no-undef
-    // @ts-ignore - getNodeSelector put into scope via stringification
+    // @ts-expect-error - getNodeSelector put into scope via stringification
     const selector = getNodeSelector(node); // eslint-disable-line no-undef
-    // @ts-ignore - getNodeLabel put into scope via stringification
+    // @ts-expect-error - getNodeLabel put into scope via stringification
     const nodeLabel = getNodeLabel(node); // eslint-disable-line no-undef
 
     if (node instanceof HTMLAnchorElement) {

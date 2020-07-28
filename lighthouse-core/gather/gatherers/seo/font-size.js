@@ -355,7 +355,7 @@ class FontSize extends Gatherer {
     // the stylsheet to the data.
     analyzedFailingNodesData
       .filter(data => data.cssRule && data.cssRule.styleSheetId)
-      // @ts-ignore - guaranteed to exist from the filter immediately above
+      // @ts-expect-error - guaranteed to exist from the filter immediately above
       .forEach(data => (data.cssRule.stylesheet = stylesheets.get(data.cssRule.styleSheetId)));
 
     await Promise.all([

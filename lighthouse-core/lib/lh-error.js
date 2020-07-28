@@ -166,7 +166,7 @@ class LighthouseError extends Error {
     // Unexpected errors won't be LHErrors, but we want them serialized as well.
     if (err instanceof Error) {
       const {message, stack} = err;
-      // @ts-ignore - code can be helpful for e.g. node errors, so preserve it if it's present.
+      // @ts-expect-error - code can be helpful for e.g. node errors, so preserve it if it's present.
       const code = err.code;
       return {
         sentinel: ERROR_SENTINEL,
