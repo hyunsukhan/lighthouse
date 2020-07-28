@@ -102,17 +102,19 @@ class NonCompositedAnimations extends Audit {
       }
     }
 
-    /** @type Map<string, {failureReasons: string[], nodes: LH.Audit.Details.NodeValue[]}> */
+    /** @type Map<string, {name: string, failureReasons: string[], nodes: LH.Audit.Details.NodeValue[]}> */
     const animations = new Map();
     animationPairs.forEach(pair => {
       if (!pair.begin ||
           !pair.begin.args.data ||
           !pair.begin.args.data.nodeId ||
+          !pair.begin.args.data.id ||
           !pair.status ||
           !pair.status.args.data ||
           !pair.status.args.data.compositeFailed) return;
 
       const nodeId = pair.begin.args.data.nodeId;
+      const animationId = pair.begin.args.data.id;
       const element = animatedElements.find(e => e.nodeId === nodeId);
       if (!element) return;
       /** @type LH.Audit.Details.NodeValue */
@@ -129,20 +131,20 @@ class NonCompositedAnimations extends Audit {
       if (failureReasons.length === 0) return;
 
       const animation = '~placeholder~';
-      const data = animations.get(animation);
+      const data = animations.get(animationId);
       if (data) {
         data.nodes.push(node);
       } else {
         // TODO: Add node specific failure reasons
-        animations.set(animation, {failureReasons, nodes: [node]});
+        animations.set(animationId, {name: animation, failureReasons, nodes: [node]});
       }
     });
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
-    animations.forEach(({failureReasons, nodes}, animation) => {
+    animations.forEach(({name, failureReasons, nodes}) => {
       results.push({
-        animation,
+        animation: name,
         failureString: failureReasons.join(', '),
         subItems: {
           type: 'subitems',
