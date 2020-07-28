@@ -100,7 +100,7 @@ class NonCompositedAnimations extends Audit {
       }
     }
 
-    /** @type Map<LH.Audit.Details.NodeValue, {name?: string, failureReasons: string[]}[]> */
+    /** @type Map<number, {node: LH.Audit.Details.NodeValue, animations: {name?: string, failureReasons: string[]}[]}> */
     const elementAnimations = new Map();
     animationPairs.forEach(pair => {
       if (!pair.begin ||
@@ -130,14 +130,17 @@ class NonCompositedAnimations extends Audit {
 
       const animation = element.animations && element.animations.find(a => a.id === animationId);
       const name = animation && animation.name;
-      const data = elementAnimations.get(node) || [];
-      data.push({name, failureReasons});
-      elementAnimations.set(node, data);
+      const data = elementAnimations.get(nodeId);
+      if (data) {
+        data.animations.push({name, failureReasons});
+      } else {
+        elementAnimations.set(nodeId, {node, animations: [{name, failureReasons}]});
+      }
     });
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
-    elementAnimations.forEach((animations, node) => {
+    elementAnimations.forEach(({animations, node}) => {
       results.push({
         node,
         subItems: {
