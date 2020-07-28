@@ -20,8 +20,6 @@ const UIStrings = {
   =1 {# animation found}
   other {# animations found}
   }`,
-  /** Label for when the animation fails to composite due to an unsupported CSS property. */
-  unsupportedCSS: 'Unsupported CSS Property',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -34,7 +32,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 const ACTIONABLE_FAILURE_REASONS = [
   {
     flag: 1 << 13,
-    text: str_(UIStrings.unsupportedCSS),
+    text: 'Unsupported CSS Property',
   },
 ];
 
@@ -102,19 +100,17 @@ class NonCompositedAnimations extends Audit {
       }
     }
 
-    /** @type Map<string, {name: string, failureReasons: string[], nodes: LH.Audit.Details.NodeValue[]}> */
-    const animations = new Map();
+    /** @type Map<LH.Audit.Details.NodeValue, {name: string, failureReasons: string[]}[]> */
+    const elementAnimations = new Map();
     animationPairs.forEach(pair => {
       if (!pair.begin ||
           !pair.begin.args.data ||
           !pair.begin.args.data.nodeId ||
-          !pair.begin.args.data.id ||
           !pair.status ||
           !pair.status.args.data ||
           !pair.status.args.data.compositeFailed) return;
 
       const nodeId = pair.begin.args.data.nodeId;
-      const animationId = pair.begin.args.data.id;
       const element = animatedElements.find(e => e.nodeId === nodeId);
       if (!element) return;
       /** @type LH.Audit.Details.NodeValue */
@@ -130,26 +126,22 @@ class NonCompositedAnimations extends Audit {
       const failureReasons = getActionableFailureReasons(compositeFailed);
       if (failureReasons.length === 0) return;
 
-      const animation = '~placeholder~';
-      const data = animations.get(animationId);
-      if (data) {
-        data.nodes.push(node);
-      } else {
-        // TODO: Add node specific failure reasons
-        animations.set(animationId, {name: animation, failureReasons, nodes: [node]});
-      }
+      // TODO: Resolve animation name
+      const name = '~placeholder~';
+      const data = elementAnimations.get(node) || [];
+      data.push({name, failureReasons});
+      elementAnimations.set(node, data);
     });
 
     /** @type {LH.Audit.Details.TableItem[]} */
     const results = [];
-    animations.forEach(({name, failureReasons, nodes}) => {
+    elementAnimations.forEach((animations, node) => {
       results.push({
-        animation: name,
-        failureString: failureReasons.join(', '),
+        node,
         subItems: {
           type: 'subitems',
-          items: nodes.map(node => {
-            return {node};
+          items: animations.map(({name, failureReasons}) => {
+            return {animation: `${name}: ${failureReasons.join(', ')}`};
           }),
         },
       });
@@ -158,8 +150,7 @@ class NonCompositedAnimations extends Audit {
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
       /* eslint-disable max-len */
-      {key: 'animation', itemType: 'text', subItemsHeading: {key: 'node', itemType: 'node'}, text: str_(i18n.UIStrings.columnName)},
-      {key: 'failureString', itemType: 'text', text: str_(i18n.UIStrings.columnName)},
+      {key: 'node', itemType: 'node', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnElement)},
       /* eslint-enable max-len */
     ];
 
