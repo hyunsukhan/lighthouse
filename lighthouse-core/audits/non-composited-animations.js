@@ -17,8 +17,8 @@ const UIStrings = {
     '[Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)',
   /** [ICU Syntax] Label identifying the number of animations that are not composited. */
   displayValue: `{itemCount, plural,
-  =1 {# animation found}
-  other {# animations found}
+  =1 {# animated element found}
+  other {# animated elements found}
   }`,
 };
 

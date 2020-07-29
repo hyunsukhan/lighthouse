@@ -32,7 +32,7 @@ describe('Non-composited animations audit', () => {
     const computedCache = new Map();
     const auditResult = await NonCompositedAnimationsAudit.audit(artifacts, {computedCache});
     expect(auditResult.score).toEqual(0);
-    expect(auditResult.displayValue).toBeDisplayString('1 animation found');
+    expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node).toEqual({
       type: 'node',
@@ -66,7 +66,7 @@ describe('Non-composited animations audit', () => {
     const computedCache = new Map();
     const auditResult = await NonCompositedAnimationsAudit.audit(artifacts, {computedCache});
     expect(auditResult.score).toEqual(0);
-    expect(auditResult.displayValue).toBeDisplayString('1 animation found');
+    expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node).toEqual({
       type: 'node',
@@ -76,7 +76,7 @@ describe('Non-composited animations audit', () => {
       snippet: '<div id="animated-boi">',
     });
     expect(auditResult.details.items[0].subItems.items[0].animation)
-      .toEqual(': Unsupported CSS Property');
+      .toEqual(''); // TODO: Define output for unnamed animation
   });
 
   it('correctly surfaces node with multiple animations', async () => {
@@ -101,7 +101,7 @@ describe('Non-composited animations audit', () => {
     const computedCache = new Map();
     const auditResult = await NonCompositedAnimationsAudit.audit(artifacts, {computedCache});
     expect(auditResult.score).toEqual(0);
-    expect(auditResult.displayValue).toBeDisplayString('1 animation found');
+    expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node).toEqual({
       type: 'node',

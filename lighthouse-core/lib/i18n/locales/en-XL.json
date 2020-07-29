@@ -969,13 +969,10 @@
     "message": "Âńîḿât́îón̂ś ŵh́îćĥ ár̂é n̂ót̂ ćôḿp̂óŝít̂éd̂ ćâń b̂é ĵán̂ḱŷ án̂d́ ĉón̂t́r̂íb̂út̂é t̂ó ĈĹŜ. [Ĺêár̂ń m̂ór̂é](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)"
   },
   "lighthouse-core/audits/non-composited-animations.js | displayValue": {
-    "message": "{itemCount, plural,\n  =1 {# âńîḿât́îón̂ f́ôún̂d́}\n  other {# âńîḿât́îón̂ś f̂óûńd̂}\n  }"
+    "message": "{itemCount, plural,\n  =1 {# âńîḿât́êd́ êĺêḿêńt̂ f́ôún̂d́}\n  other {# âńîḿât́êd́ êĺêḿêńt̂ś f̂óûńd̂}\n  }"
   },
   "lighthouse-core/audits/non-composited-animations.js | title": {
     "message": "Âv́ôíd̂ ńôń-ĉóm̂ṕôśît́êd́ âńîḿât́îón̂ś"
-  },
-  "lighthouse-core/audits/non-composited-animations.js | unsupportedCSS": {
-    "message": "Ûńŝúp̂ṕôŕt̂éd̂ ĆŜŚ P̂ŕôṕêŕt̂ý"
   },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url/)."
