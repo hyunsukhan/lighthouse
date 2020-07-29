@@ -80,7 +80,7 @@ class NonCompositedAnimations extends Audit {
       return {
         score: 1,
         notApplicable: true,
-      }
+      };
     }
 
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
