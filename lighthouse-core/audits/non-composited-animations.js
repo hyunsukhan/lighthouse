@@ -143,7 +143,7 @@ class NonCompositedAnimations extends Audit {
     elementAnimations.forEach(({animations, node}) => {
       results.push({
         node,
-        failureReasons: '',
+        failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
         subItems: {
           type: 'subitems',
           items: animations.map(({name, failureReasons}) => {
