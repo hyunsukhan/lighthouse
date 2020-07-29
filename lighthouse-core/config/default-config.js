@@ -215,7 +215,6 @@ const defaultConfig = {
     'themed-omnibox',
     'maskable-icon',
     'content-width',
-    'unsized-images',
     'image-aspect-ratio',
     'image-size-responsive',
     'deprecations',
@@ -553,7 +552,6 @@ const defaultConfig = {
         {id: 'no-vulnerable-libraries', weight: 1, group: 'best-practices-trust-safety'},
         // User Experience
         {id: 'password-inputs-can-be-pasted-into', weight: 1, group: 'best-practices-ux'},
-        {id: 'unsized-images', weight: 1, group: 'best-practices-ux'},
         {id: 'image-aspect-ratio', weight: 1, group: 'best-practices-ux'},
         {id: 'image-size-responsive', weight: 1, group: 'best-practices-ux'},
         // Browser Compatibility
