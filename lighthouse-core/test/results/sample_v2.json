@@ -1881,12 +1881,7 @@
       "title": "Avoid non-composited animations",
       "description": "Animations which are not composited can be janky and contribute to CLS. [Learn more](https://developers.google.com/web/fundamentals/performance/rendering/stick-to-compositor-only-properties-and-manage-layer-count)",
       "score": null,
-      "scoreDisplayMode": "notApplicable",
-      "details": {
-        "type": "table",
-        "headings": [],
-        "items": []
-      }
+      "scoreDisplayMode": "notApplicable"
     },
     "pwa-cross-browser": {
       "id": "pwa-cross-browser",
