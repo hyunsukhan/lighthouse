@@ -139,12 +139,9 @@ class NonCompositedAnimations extends Audit {
 
       const animation = element.animations && element.animations.find(a => a.id === animationId);
       const name = animation && animation.name;
-      const data = elementAnimations.get(nodeId);
-      if (data) {
-        data.animations.push({name, failureReasons});
-      } else {
-        elementAnimations.set(nodeId, {node, animations: [{name, failureReasons}]});
-      }
+      const data = elementAnimations.get(nodeId) || {node, animations: []};
+      data.animations.push({name, failureReasons});
+      elementAnimations.set(nodeId, data);
     });
 
     /** @type {LH.Audit.Details.TableItem[]} */
