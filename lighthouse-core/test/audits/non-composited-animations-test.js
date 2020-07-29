@@ -41,8 +41,10 @@ describe('Non-composited animations audit', () => {
       nodeLabel: 'div',
       snippet: '<div id="animated-boi">',
     });
-    expect(auditResult.details.items[0].subItems.items[0].animation)
-      .toEqual('example: Unsupported CSS Property');
+    expect(auditResult.details.items[0].subItems.items[0]).toEqual({
+      animation: 'example',
+      failureReasons: 'Unsupported CSS Property',
+    });
   });
 
   it('correctly surfaces unnamed animation', async () => {
@@ -75,8 +77,10 @@ describe('Non-composited animations audit', () => {
       nodeLabel: 'div',
       snippet: '<div id="animated-boi">',
     });
-    expect(auditResult.details.items[0].subItems.items[0].animation)
-      .toEqual(''); // TODO: Define output for unnamed animation
+    expect(auditResult.details.items[0].subItems.items[0]).toEqual({
+      animation: '*UNNAMED ANIMATION*', // TODO: Define output for unnamed animation
+      failureReasons: 'Unsupported CSS Property'
+    })
   });
 
   it('correctly surfaces node with multiple animations', async () => {
@@ -111,8 +115,14 @@ describe('Non-composited animations audit', () => {
       snippet: '<div id="animated-boi">',
     });
     expect(auditResult.details.items[0].subItems.items).toEqual([
-      {animation: 'alpha: Unsupported CSS Property'},
-      {animation: 'beta: Unsupported CSS Property'},
+      {
+        animation: 'alpha',
+        failureReasons: 'Unsupported CSS Property',
+      },
+      {
+        animation: 'beta',
+        failureReasons: 'Unsupported CSS Property',
+      },
     ]);
   });
 });
