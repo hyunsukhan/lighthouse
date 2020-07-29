@@ -292,4 +292,48 @@ module.exports = [
       },
     },
   },
+  {
+    lhr: {
+      requestedUrl: 'http://localhost:10200/perf/animations.html',
+      finalUrl: 'http://localhost:10200/perf/animations.html',
+      audits: {
+        'non-composited-animations': {
+          // Requires compositor failure reasons to be in the trace
+          // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
+          _minChromiumMilestone: 86,
+          score: 0,
+          displayValue: '1 animated element found',
+          details: {
+            items: [
+              {
+                node: {
+                  type: 'node',
+                  path: '1,HTML,1,BODY,1,DIV',
+                  selector: 'body > div#animated-boi',
+                  nodeLabel: 'div',
+                  snippet: '<div id="animated-boi">',
+                },
+                subItems: {
+                  items: [
+                    {
+                      animation: '*UNNAMED ANIMATION*',
+                      failureReasons: 'Unsupported CSS Property',
+                    },
+                    {
+                      animation: 'alpha',
+                      failureReasons: 'Unsupported CSS Property',
+                    },
+                    {
+                      animation: 'beta',
+                      failureReasons: 'Unsupported CSS Property',
+                    },
+                  ]
+                }
+              }
+            ]
+          },
+        }
+      }
+    }
+  },
 ];
