@@ -9,8 +9,8 @@ const UnSizedImagesAudit = require('../../audits/unsized-images.js');
 
 /* eslint-env jest */
 
-function generateImage(props, src = 'https://google.com/logo.png', isCss = false) {
-  const image = {src, isCss};
+function generateImage(props, src = 'https://google.com/logo.png', isCss = false, isShadow = false) {
+  const image = {src, isCss, isShadow};
   Object.assign(image, props);
   return image;
 }
@@ -28,6 +28,17 @@ describe('Sized images audit', () => {
   it('passes when an image is a css image', async () => {
     const result = await runAudit({
       isCss: true,
+      attributeWidth: '',
+      attributeHeight: '',
+      cssWidth: '',
+      cssHeight: '',
+    });
+    expect(result.score).toEqual(1);
+  });
+
+  it('passes when an image is a shadowroot image', async () => {
+    const result = await runAudit({
+      isShadow: true,
       attributeWidth: '',
       attributeHeight: '',
       cssWidth: '',
