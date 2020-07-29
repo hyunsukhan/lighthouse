@@ -194,7 +194,7 @@ function findMostSpecificMatchedCSSRule(matchedCSSRules = [], property) {
   let maxSpecificityRule;
 
   for (const {rule, matchingSelectors} of matchedCSSRules) {
-    // hasSizeDeclaration from font-size.js using `.some()`
+    // hasSizeDeclaration from font-size.js using `.some()`.
     if (!!rule.style && rule.style.cssProperties.some(({name}) => name === property)) {
       const specificities = matchingSelectors.map(idx =>
         FontSize.computeSelectorSpecificity(rule.selectorList.selectors[idx].text)
@@ -209,7 +209,7 @@ function findMostSpecificMatchedCSSRule(matchedCSSRules = [], property) {
   }
 
   if (maxSpecificityRule) {
-    // @ts-ignore the existence of the property object is checked in the for loop
+    // @ts-expect-error the existence of the property object is checked in the for loop
     return maxSpecificityRule.style.cssProperties.find(({name}) => name === property).value;
   }
 }
@@ -220,15 +220,15 @@ function findMostSpecificMatchedCSSRule(matchedCSSRules = [], property) {
  * @returns {string | undefined}
  */
 function getEffectiveSizingRule({attributesStyle, inlineStyle, matchedCSSRules}, property) {
-  // CSS sizing can't be inherited
-  // We only need to check inline & matched styles
-  // Inline styles have highest priority
+  // CSS sizing can't be inherited.
+  // We only need to check inline & matched styles.
+  // Inline styles have highest priority.
   const inlineRule = findSizeDeclaration(inlineStyle, property);
   if (inlineRule) return inlineRule;
 
   const attributeRule = findSizeDeclaration(attributesStyle, property);
   if (attributeRule) return attributeRule;
-  // Rules directly referencing the node come next
+  // Rules directly referencing the node come next.
   const matchedRule = findMostSpecificMatchedCSSRule(matchedCSSRules, property);
   if (matchedRule) return matchedRule;
 }
