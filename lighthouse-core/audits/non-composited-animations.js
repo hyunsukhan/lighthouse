@@ -20,6 +20,8 @@ const UIStrings = {
   =1 {# animated element found}
   other {# animated elements found}
   }`,
+  /** Placeholder name for an animation that has no display name */
+  unnamedAnimation: '*UNNAMED ANIMATION*'
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -146,7 +148,10 @@ class NonCompositedAnimations extends Audit {
         subItems: {
           type: 'subitems',
           items: animations.map(({name, failureReasons}) => {
-            return {animation: `${name}: ${failureReasons.join(', ')}`};
+            return {
+              animation: name || str_(UIStrings.unnamedAnimation),
+              failureReasons: failureReasons.join(', '),
+            };
           }),
         },
       });
@@ -156,6 +161,7 @@ class NonCompositedAnimations extends Audit {
     const headings = [
       /* eslint-disable max-len */
       {key: 'node', itemType: 'node', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnElement)},
+      {key: 'failureReasons', itemType: 'text', subItemsHeading: {key: 'failureReasons', itemType: 'text'}, text: str_(i18n.UIStrings.columnFailureReasons)},
       /* eslint-enable max-len */
     ];
 

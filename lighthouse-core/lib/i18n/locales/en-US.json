@@ -974,6 +974,9 @@
   "lighthouse-core/audits/non-composited-animations.js | title": {
     "message": "Avoid non-composited animations"
   },
+  "lighthouse-core/audits/non-composited-animations.js | unnamedAnimation": {
+    "message": "*UNNAMED ANIMATION*"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://web.dev/offline-start-url/)."
   },
@@ -1504,6 +1507,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Element"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailureReasons": {
+    "message": "Failure Reasons"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Location"

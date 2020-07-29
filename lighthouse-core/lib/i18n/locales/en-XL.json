@@ -974,6 +974,9 @@
   "lighthouse-core/audits/non-composited-animations.js | title": {
     "message": "Âv́ôíd̂ ńôń-ĉóm̂ṕôśît́êd́ âńîḿât́îón̂ś"
   },
+  "lighthouse-core/audits/non-composited-animations.js | unnamedAnimation": {
+    "message": "*ÛŃN̂ÁM̂ÉD̂ ÁN̂ÍM̂ÁT̂ÍÔŃ*"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "Â śêŕv̂íĉé ŵór̂ḱêŕ êńâb́l̂éŝ ýôúr̂ ẃêb́ âṕp̂ t́ô b́ê ŕêĺîáb̂ĺê ín̂ ún̂ṕr̂éd̂íĉt́âb́l̂é n̂ét̂ẃôŕk̂ ćôńd̂ít̂íôńŝ. [Ĺêár̂ń m̂ór̂é](https://web.dev/offline-start-url/)."
   },
@@ -1504,6 +1507,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnElement": {
     "message": "Êĺêḿêńt̂"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnFailureReasons": {
+    "message": "F̂áîĺûŕê Ŕêáŝón̂ś"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "L̂óĉát̂íôń"
