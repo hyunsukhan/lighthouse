@@ -21,7 +21,7 @@ const UIStrings = {
   other {# animated elements found}
   }`,
   /** Placeholder name for an animation that has no display name */
-  unnamedAnimation: '*UNNAMED ANIMATION*'
+  unnamedAnimation: '*UNNAMED ANIMATION*',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);

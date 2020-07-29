@@ -79,8 +79,8 @@ describe('Non-composited animations audit', () => {
     });
     expect(auditResult.details.items[0].subItems.items[0]).toEqual({
       animation: '*UNNAMED ANIMATION*', // TODO: Define output for unnamed animation
-      failureReasons: 'Unsupported CSS Property'
-    })
+      failureReasons: 'Unsupported CSS Property',
+    });
   });
 
   it('correctly surfaces node with multiple animations', async () => {
