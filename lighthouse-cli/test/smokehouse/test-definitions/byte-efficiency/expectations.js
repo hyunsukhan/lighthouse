@@ -245,6 +245,7 @@ const expectations = [
             items: [
               {url: /lighthouse-unoptimized\.jpg/},
               {url: /lighthouse-320x212-poor\.jpg/},
+              {url: /lighthouse-320x212-poor\.jpg/},
               {url: /lighthouse-.+\?srcset/},
               {url: /lighthouse-.+\?picture/},
               {url: /lighthouse-320x212-poor\.jpg\?duplicate/},
