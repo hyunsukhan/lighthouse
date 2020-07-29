@@ -11,43 +11,7 @@ const trace = require('../fixtures/traces/animation.json');
 
 /* eslint-env jest */
 describe('Non-composited animations audit', () => {
-  it('correctly surfaces a non-composited animation', async () => {
-    const artifacts = {
-      traces: {defaultPass: trace},
-      TraceElements: [
-        {
-          traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated-boi',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-boi">',
-          nodeId: 4,
-          animations: [
-            {id: '1', name: 'example'},
-          ],
-        },
-      ],
-    };
-
-    const computedCache = new Map();
-    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts, {computedCache});
-    expect(auditResult.score).toEqual(0);
-    expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
-    expect(auditResult.details.items).toHaveLength(1);
-    expect(auditResult.details.items[0].node).toEqual({
-      type: 'node',
-      path: '1,HTML,1,BODY,1,DIV',
-      selector: 'body > div#animated-boi',
-      nodeLabel: 'div',
-      snippet: '<div id="animated-boi">',
-    });
-    expect(auditResult.details.items[0].subItems.items[0]).toEqual({
-      animation: 'example',
-      failureReasons: 'Unsupported CSS Property',
-    });
-  });
-
-  it('correctly surfaces unnamed animation', async () => {
+  it('correctly surfaces non-composited animations', async () => {
     const artifacts = {
       traces: {defaultPass: trace},
       TraceElements: [
@@ -60,43 +24,8 @@ describe('Non-composited animations audit', () => {
           nodeId: 4,
           animations: [
             {id: '1'},
-          ],
-        },
-      ],
-    };
-
-    const computedCache = new Map();
-    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts, {computedCache});
-    expect(auditResult.score).toEqual(0);
-    expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
-    expect(auditResult.details.items).toHaveLength(1);
-    expect(auditResult.details.items[0].node).toEqual({
-      type: 'node',
-      path: '1,HTML,1,BODY,1,DIV',
-      selector: 'body > div#animated-boi',
-      nodeLabel: 'div',
-      snippet: '<div id="animated-boi">',
-    });
-    expect(auditResult.details.items[0].subItems.items[0]).toEqual({
-      animation: '*UNNAMED ANIMATION*', // TODO: Define output for unnamed animation
-      failureReasons: 'Unsupported CSS Property',
-    });
-  });
-
-  it('correctly surfaces node with multiple animations', async () => {
-    const artifacts = {
-      traces: {defaultPass: trace},
-      TraceElements: [
-        {
-          traceEventType: 'animation',
-          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
-          selector: 'body > div#animated-boi',
-          nodeLabel: 'div',
-          snippet: '<div id="animated-boi">',
-          nodeId: 4,
-          animations: [
-            {id: '1', name: 'alpha'},
-            {id: '2', name: 'beta'},
+            {id: '2', name: 'alpha'},
+            {id: '3', name: 'beta'},
           ],
         },
       ],
@@ -116,13 +45,17 @@ describe('Non-composited animations audit', () => {
     });
     expect(auditResult.details.items[0].subItems.items).toEqual([
       {
+        animation: '*UNNAMED ANIMATION*',
+        failureReasons: 'Unsupported CSS Property',
+      },
+      {
         animation: 'alpha',
         failureReasons: 'Unsupported CSS Property',
       },
       {
         animation: 'beta',
         failureReasons: 'Unsupported CSS Property',
-      },
+      }
     ]);
   });
 });

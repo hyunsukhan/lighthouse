@@ -20,8 +20,6 @@ const UIStrings = {
   =1 {# animated element found}
   other {# animated elements found}
   }`,
-  /** Placeholder name for an animation that has no display name */
-  unnamedAnimation: '*UNNAMED ANIMATION*',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -150,7 +148,7 @@ class NonCompositedAnimations extends Audit {
           type: 'subitems',
           items: animations.map(({name, failureReasons}) => {
             return {
-              animation: name || str_(UIStrings.unnamedAnimation),
+              animation: name || '*UNNAMED ANIMATION*',
               failureReasons: failureReasons.join(', '),
             };
           }),
