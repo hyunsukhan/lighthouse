@@ -64,7 +64,7 @@ class NonCompositedAnimations extends Audit {
       scoreDisplayMode: Audit.SCORING_MODES.INFORMATIVE,
       title: str_(UIStrings.title),
       description: str_(UIStrings.description),
-      requiredArtifacts: ['traces', 'TraceElements'],
+      requiredArtifacts: ['traces', 'TraceElements', 'HostUserAgent'],
     };
   }
 
@@ -74,6 +74,15 @@ class NonCompositedAnimations extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts, context) {
+    // This audit reqiures m86
+    const match = artifacts.HostUserAgent.match(/Chrome\/(\d+)/);
+    if (!match || Number(match[1]) < 86) {
+      return {
+        score: 1,
+        notApplicable: true,
+      }
+    }
+
     const trace = artifacts.traces[Audit.DEFAULT_PASS];
     const traceOfTab = await TraceOfTab.request(trace, context);
     const animatedElements = artifacts.TraceElements
