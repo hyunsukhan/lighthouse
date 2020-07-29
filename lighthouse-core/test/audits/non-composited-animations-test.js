@@ -55,7 +55,7 @@ describe('Non-composited animations audit', () => {
       {
         animation: 'beta',
         failureReasons: 'Unsupported CSS Property',
-      }
+      },
     ]);
   });
 });
