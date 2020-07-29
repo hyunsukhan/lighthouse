@@ -5,12 +5,14 @@
  */
 'use strict';
 
+const experimentalConfig = require('../../../../../lighthouse-core/config/experimental-config.js');
+
 /**
  * @type {LH.Config.Json}
  * Config file for running byte efficiency smokehouse audits.
  */
 const config = {
-  extends: 'lighthouse:default',
+  ...experimentalConfig,
   settings: {
     onlyAudits: [
       'accesskeys', // run axe on the page since we've had problems with interactions
@@ -35,6 +37,7 @@ const config = {
     throttlingMethod: 'devtools',
   },
   audits: [
+    'unsized-images',
     {path: 'byte-efficiency/unused-javascript', options: {
       // Lower the threshold so we don't need huge resources to make a test.
       unusedThreshold: 2000,
