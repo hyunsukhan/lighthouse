@@ -201,13 +201,13 @@ class TraceElements extends Gatherer {
 
     /** @type Map<number, Set<{animationId: string, failureReasons?: number}>> */
     const elementAnimations = new Map();
-    for (const [,{begin, status}] of animationPairs) {
+    for (const [, {begin, status}] of animationPairs) {
       const nodeId = this.getNodeIDFromTraceEvent(begin);
       const animationId = this.getAnimationIDFromTraceEvent(begin);
       const failureReasons = this.getFailureReasonsFromTraceEvent(status);
       if (!nodeId || !animationId) continue;
       const animationIds = elementAnimations.get(nodeId) || new Set();
-      animationIds.add({animationId, failureReasons})
+      animationIds.add({animationId, failureReasons});
       elementAnimations.set(nodeId, animationIds);
     }
 

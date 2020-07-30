@@ -330,13 +330,13 @@ module.exports = [
                       animation: 'beta',
                       failureReasons: 'Unsupported CSS Property',
                     },
-                  ]
-                }
-              }
-            ]
+                  ],
+                },
+              },
+            ],
           },
-        }
-      }
-    }
+        },
+      },
+    },
   },
 ];

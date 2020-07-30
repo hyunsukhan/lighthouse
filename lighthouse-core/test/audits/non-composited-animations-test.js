@@ -31,8 +31,7 @@ describe('Non-composited animations audit', () => {
         'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
     };
 
-    const computedCache = new Map();
-    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts, {computedCache});
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
     expect(auditResult.score).toEqual(0);
     expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
     expect(auditResult.details.items).toHaveLength(1);

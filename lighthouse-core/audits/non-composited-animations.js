@@ -6,7 +6,6 @@
 'use strict';
 
 const Audit = require('./audit.js');
-const TraceOfTab = require('../computed/trace-of-tab.js');
 const i18n = require('../lib/i18n/i18n.js');
 
 const UIStrings = {
@@ -70,10 +69,9 @@ class NonCompositedAnimations extends Audit {
 
   /**
    * @param {LH.Artifacts} artifacts
-   * @param {LH.Audit.Context} context
    * @return {Promise<LH.Audit.Product>}
    */
-  static async audit(artifacts, context) {
+  static async audit(artifacts) {
     // This audit reqiures m86
     const match = artifacts.HostUserAgent.match(/Chrome\/(\d+)/);
     if (!match || Number(match[1]) < 86) {
@@ -115,9 +113,9 @@ class NonCompositedAnimations extends Audit {
         subItems: {
           type: 'subitems',
           items,
-        }
+        },
       });
-    })
+    });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
