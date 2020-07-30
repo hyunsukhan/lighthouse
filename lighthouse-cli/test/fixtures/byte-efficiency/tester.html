@@ -116,7 +116,7 @@ setTimeout(() => {
   <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is onscreen -->
   <!-- PASS(unsized-images): has attribute sizing -->
-  <img width="160" height="110" src="lighthouse-480x320.jpg">
+  <img width="160" height="110" src="lighthouse-480x320.jpg?attributesized">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image has insigificant WebP savings -->
@@ -132,7 +132,7 @@ setTimeout(() => {
   <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
   <!-- PASS(offscreen): image is onscreen -->
   <!-- FAIL(unsized-images): invalid CSS sizing -->
-  <img style="width: auto; height: auto;" src="lighthouse-320x212-poor.jpg">
+  <img style="width: auto; height: auto;" src="lighthouse-320x212-poor.jpg?cssauto">
 
   <!-- PASS(optimized): image is JPEG optimized -->
   <!-- PASS(webp): image is WebP savings -->
