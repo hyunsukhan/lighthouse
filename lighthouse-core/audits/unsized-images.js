@@ -87,7 +87,7 @@ class SizedImages extends Audit {
    */
   static async audit(artifacts) {
     // CSS background-images & ShadowRoot images are ignored for this audit.
-    const images = artifacts.ImageElements.filter(el => !el.isCss && !el.isShadow);
+    const images = artifacts.ImageElements.filter(el => !el.isCss && !el.isInShadowDOM);
     const unsizedImages = [];
 
     for (const image of images) {

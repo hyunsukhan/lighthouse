@@ -67,7 +67,7 @@ function getHTMLImages(allElements) {
       usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
         computedStyle.getPropertyValue('image-rendering')
       ),
-      isShadow: element.getRootNode() instanceof ShadowRoot,
+      isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
       // https://html.spec.whatwg.org/multipage/images.html#pixel-density-descriptor
       usesSrcSetDensityDescriptor: / \d+(\.\d+)?x/.test(element.srcset),
       // @ts-ignore - getNodePath put into scope via stringification
@@ -119,7 +119,7 @@ function getCSSImages(allElements) {
       cssHeight: '',
       isCss: true,
       isPicture: false,
-      isShadow: element.getRootNode() instanceof ShadowRoot,
+      isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
       usesObjectFit: false,
       usesPixelArtScaling: ['pixelated', 'crisp-edges'].includes(
         style.getPropertyValue('image-rendering')
@@ -340,7 +340,7 @@ class ImageElements extends Gatherer {
       const {resourceSize = 0, transferSize = 0} = networkRecord;
       element.resourceSize = Math.min(resourceSize, transferSize);
 
-      if (!element.isShadow) {
+      if (!element.isInShadowDOM) {
         await this.fetchSourceRules(driver, element.devtoolsNodePath, element);
       }
       // Images within `picture` behave strangely and natural size information isn't accurate,

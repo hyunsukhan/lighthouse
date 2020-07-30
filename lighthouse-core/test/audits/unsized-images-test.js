@@ -9,8 +9,8 @@ const UnSizedImagesAudit = require('../../audits/unsized-images.js');
 
 /* eslint-env jest */
 
-function generateImage(props, src = 'https://google.com/logo.png', isCss = false, isShadow = false) {
-  const image = {src, isCss, isShadow};
+function generateImage(props, src = 'https://google.com/logo.png', isCss = false, isInShadowDOM = false) {
+  const image = {src, isCss, isInShadowDOM};
   Object.assign(image, props);
   return image;
 }
@@ -38,7 +38,7 @@ describe('Sized images audit', () => {
 
   it('passes when an image is a shadowroot image', async () => {
     const result = await runAudit({
-      isShadow: true,
+      isInShadowDOM: true,
       attributeWidth: '',
       attributeHeight: '',
       cssWidth: '',
