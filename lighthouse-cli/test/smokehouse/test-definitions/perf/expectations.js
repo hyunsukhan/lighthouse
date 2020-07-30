@@ -216,7 +216,10 @@ module.exports = [
             height: 100,
           },
           animations: [
-            {name: 'anim'},
+            {
+              name: 'anim',
+              failureReasons: 8224,
+            },
           ],
         },
       ],

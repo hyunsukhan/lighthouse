@@ -7,13 +7,11 @@
 
 const NonCompositedAnimationsAudit =
   require('../../audits/non-composited-animations.js');
-const trace = require('../fixtures/traces/animation.json');
 
 /* eslint-env jest */
 describe('Non-composited animations audit', () => {
   it('correctly surfaces non-composited animations', async () => {
     const artifacts = {
-      traces: {defaultPass: trace},
       TraceElements: [
         {
           traceEventType: 'animation',
@@ -23,9 +21,9 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-boi">',
           nodeId: 4,
           animations: [
-            {id: '1'},
-            {id: '2', name: 'alpha'},
-            {id: '3', name: 'beta'},
+            {failureReasons: 8192},
+            {name: 'alpha', failureReasons: 8192},
+            {name: 'beta', failureReasons: 8192},
           ],
         },
       ],

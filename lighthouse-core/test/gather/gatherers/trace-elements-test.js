@@ -33,23 +33,17 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     };
   }
 
-  function makeAnimationTraceEvent(id, nodeId) {
+  function makeAnimationTraceEvent(local, ph, data) {
     return {
       args: {
-        data: {
-          id,
-          name: '',
-          nodeId,
-          nodeName: 'DIV',
-          state: 'running',
-        },
+        data,
       },
       cat: 'blink.animations,devtools.timeline,benchmark,rail',
       id2: {
-        local: '0x363db876c8',
+        local,
       },
       name: 'Animation',
-      ph: 'b',
+      ph,
       pid: 1111,
       scope: 'blink.animations,devtools.timeline,benchmark,rail',
       tid: 222,
@@ -339,19 +333,22 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       }]});
     const driver = new Driver(connectionStub);
     const traceEvents = [
-      makeAnimationTraceEvent('1', 5),
-      makeAnimationTraceEvent('2', 5),
-      makeAnimationTraceEvent('3', 6),
+      makeAnimationTraceEvent('0x363db876c1', 'b', {id: '1', nodeId: 5}),
+      makeAnimationTraceEvent('0x363db876c1', 'n', {compositeFailed: 8192}),
+      makeAnimationTraceEvent('0x363db876c2', 'b', {id: '2', nodeId: 5}),
+      makeAnimationTraceEvent('0x363db876c2', 'n', {compositeFailed: 8192}),
+      makeAnimationTraceEvent('0x363db876c3', 'b', {id: '3', nodeId: 6}),
+      makeAnimationTraceEvent('0x363db876c3', 'n', {compositeFailed: 8192}),
     ];
 
     const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
     expect(result).toEqual([
       {nodeId: 5, animations: [
-        {id: '1', name: 'alpha'},
-        {id: '2', name: 'beta'},
+        {name: 'alpha', failureReasons: 8192},
+        {name: 'beta', failureReasons: 8192},
       ]},
       {nodeId: 6, animations: [
-        {id: '3', name: 'gamma'},
+        {name: 'gamma', failureReasons: 8192},
       ]},
     ]);
   });
@@ -427,7 +424,8 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
         },
       ])
     );
-    trace.traceEvents.push(makeAnimationTraceEvent('1', 5));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'b', {id: '1', nodeId: 5}));
+    trace.traceEvents.push(makeAnimationTraceEvent('0x363db876c8', 'n', {compositeFailed: 8192}));
     trace.traceEvents.push(makeLCPTraceEvent(6));
 
     const gatherer = new TraceElementsGatherer();
@@ -446,7 +444,7 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       {
         ...animationNodeData,
         animations: [
-          {id: '1', name: 'example'},
+          {name: 'example', failureReasons: 8192},
         ],
         nodeId: 5,
       },
