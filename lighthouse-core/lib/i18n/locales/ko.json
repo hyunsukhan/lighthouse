@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "페이지 로드 시 알림 권한 요청 방지하기"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "통과하지 못한 요소"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "비밀번호 붙여넣기 방지로 인해 타당한 보안 정책이 저해됩니다. [자세히 알아보기](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

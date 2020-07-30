@@ -33,6 +33,8 @@ jobs:
       run: xvfb-run --auto-servernum yarn test-bundle
     - name: yarn test-docs
       run: xvfb-run --auto-servernum yarn test-docs
+    - name: yarn test-viewer
+      run: xvfb-run --auto-servernum yarn test-viewer
 
     - run: yarn diff:sample-json
     - run: yarn type-check

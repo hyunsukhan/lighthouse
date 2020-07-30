@@ -214,9 +214,9 @@ describe('minification estimator', () => {
     });
 
     it('should handle large, real javscript files', () => {
-      assert.equal(angularFullScript.length, 1371888);
-      // 1 - 334968 / 1364217 = estimated 75% smaller minified
-      assert.equal(computeJSTokenLength(angularFullScript), 337959);
+      assert.equal(angularFullScript.length, 1374505);
+      // 1 - 338528 / 1374505 = estimated 75.3% smaller minified
+      assert.equal(computeJSTokenLength(angularFullScript), 338528);
     });
   });
 });

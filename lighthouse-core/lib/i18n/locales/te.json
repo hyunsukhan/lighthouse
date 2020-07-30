@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "పేజీ లోడ్ సమయంలో నోటిఫికేషన్ అనుమతిని అభ్యర్థించడం నివారిస్తుంది"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "విఫలం అవుతున్న మూలకాలు"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "పాస్‌వర్డ్‌లో అతికించే చర్యను నిరోధించడం వలన మంచి భద్రతా విధానానికి ఆటంకం ఏర్పడుతుంది. [మరింత తెలుసుకోండి](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

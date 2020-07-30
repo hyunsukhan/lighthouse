@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita di chiedere l'autorizzazione di accesso alle notifiche durante il caricamento della pagina"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementi che non consentono di incollare"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Impedire di incollare le password pregiudica l'efficacia delle norme di sicurezza. [Ulteriori informazioni](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

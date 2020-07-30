@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Undgår at anmode om tilladelse til notifikationer ved indlæsning af siden"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementer, der ikke bestod gennemgangen"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "En god sikkerhedspolitik undermineres ved at forhindre indsættelse af adgangskoder. [Få flere oplysninger](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

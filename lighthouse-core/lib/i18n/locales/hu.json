@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Kerüli az értesítésekre vonatkozó engedély kérését oldalbetöltéskor"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Hibás elemek"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "A jelszóbeillesztés megakadályozása rossz biztonsági gyakorlat. [További információ](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

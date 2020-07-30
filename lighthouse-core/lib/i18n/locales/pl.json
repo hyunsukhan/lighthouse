@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Nie pyta o zgodę na wyświetlanie powiadomień podczas wczytywania strony"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Nieprawidłowe elementy"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Uniemożliwianie wklejania haseł jest sprzeczne z dobrymi zasadami bezpieczeństwa. [Więcej informacji](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

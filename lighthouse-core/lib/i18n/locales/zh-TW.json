@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "避免在載入網頁時要求使用者允許網站顯示通知"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "未通過稽核的元素"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "禁止貼上密碼會對安全性政策造成不良影響[瞭解詳情](https://web.dev/password-inputs-can-be-pasted-into/)。"
   },

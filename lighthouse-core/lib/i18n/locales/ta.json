@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "பக்கம் ஏற்றப்படும்போது அதுகுறித்த அறிவிப்பைத் தெரிந்துகொள்வதற்கான அனுமதியைக் கோராது"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "தோல்வியுறும் உறுப்புகள்"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "கடவுச்சொல்லை ஒட்டுவதைத் தடுப்பதால் நல்ல பாதுகாப்புக் கொள்கை பாதிக்கப்படுகிறது. [மேலும் அறிக](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

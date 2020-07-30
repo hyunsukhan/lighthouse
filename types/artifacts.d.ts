@@ -410,6 +410,14 @@ declare global {
         naturalWidth: number;
         /** The natural height of the underlying image, uses img.naturalHeight. See https://codepen.io/patrickhulce/pen/PXvQbM for examples. */
         naturalHeight: number;
+        /** The raw width attribute of the image element. CSS images will be set to the empty string. */
+        attributeWidth: string;
+        /** The raw height attribute of the image element. CSS images will be set to the empty string. */
+        attributeHeight: string;
+        /** The CSS width property of the image element. */
+        cssWidth?: string | undefined;
+        /** The CSS height property of the image element. */
+        cssHeight?: string | undefined;
         /** The BoundingClientRect of the element. */
         clientRect: {
           top: number;
@@ -434,6 +442,11 @@ declare global {
         usesSrcSetDensityDescriptor: boolean;
         /** The size of the underlying image file in bytes. 0 if the file could not be identified. */
         resourceSize: number;
+        /** Path that uniquely identifies the node in the DOM */
+        devtoolsNodePath: string;
+        snippet: string;
+        selector: string;
+        nodeLabel: string;
         /** The MIME type of the underlying image file. */
         mimeType?: string;
         /** The loading attribute of the image. */

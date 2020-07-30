@@ -6915,13 +6915,14 @@
       "lighthouse-core/audits/accessibility/color-contrast.js | description": [
         "audits[color-contrast].description"
       ],
-      "lighthouse-core/audits/accessibility/axe-audit.js | failingElementsHeader": [
+      "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": [
         "audits[color-contrast].details.headings[0].text",
         "audits[html-has-lang].details.headings[0].text",
         "audits[image-alt].details.headings[0].text",
         "audits.label.details.headings[0].text",
         "audits[link-name].details.headings[0].text",
-        "audits[object-alt].details.headings[0].text"
+        "audits[object-alt].details.headings[0].text",
+        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
       "lighthouse-core/audits/accessibility/definition-list.js | title": [
         "audits[definition-list].title"
@@ -7371,9 +7372,6 @@
       ],
       "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": [
         "audits[password-inputs-can-be-pasted-into].description"
-      ],
-      "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": [
-        "audits[password-inputs-can-be-pasted-into].details.headings[0].text"
       ],
       "lighthouse-core/audits/dobetterweb/uses-http2.js | title": [
         "audits[uses-http2].title"

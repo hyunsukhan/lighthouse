@@ -50,10 +50,9 @@ const GatherRunner = {
 };
 
 /**
- * @param {RecursivePartial<LH.Config.Json>} json
+ * @param {LH.Config.Json} json
  */
 function makeConfig(json) {
-  // @ts-expect-error: allow recursive partial.
   const config = new Config(json);
 
   // Since the config is for `gather-runner`, ensure it has `passes`.
@@ -214,7 +213,7 @@ describe('GatherRunner', function() {
   it('collects network user agent as an artifact', async () => {
     const requestedUrl = 'https://example.com';
     const driver = fakeDriver;
-    const config = makeConfig({passes: [{}]});
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings};
 
     const results = await GatherRunner.run(config.passes, options);
@@ -229,7 +228,7 @@ describe('GatherRunner', function() {
         return Promise.resolve({finalUrl, timedOut: false});
       },
     });
-    const config = makeConfig({passes: [{}]});
+    const config = makeConfig({passes: [{passName: 'defaultPass'}]});
     const options = {requestedUrl, driver, settings: config.settings};
 
     return GatherRunner.run(config.passes, options).then(artifacts => {
@@ -1361,6 +1360,7 @@ describe('GatherRunner', function() {
       ];
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers: gatherers.map(G => ({instance: new G()})),
         }],
       });
@@ -1417,6 +1417,7 @@ describe('GatherRunner', function() {
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers,
         }],
       });
@@ -1464,7 +1465,10 @@ describe('GatherRunner', function() {
       ];
 
       const config = makeConfig({
-        passes: [{gatherers}],
+        passes: [{
+          passName: 'defaultPass',
+          gatherers,
+        }],
       });
 
       /** @type {any} Using Test-only gatherers. */
@@ -1550,6 +1554,7 @@ describe('GatherRunner', function() {
 
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers: [{instance: new WarningGatherer()}],
         }],
       });
@@ -1603,6 +1608,7 @@ describe('GatherRunner', function() {
       const gathererNames = gatherers.map(gatherer => gatherer.instance.name);
       const config = makeConfig({
         passes: [{
+          passName: 'defaultPass',
           gatherers,
         }],
       });

@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "يتم تجنُّب طلب إذن الإشعار عند تحميل الصفحة"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "العناصر التي لا تسمح بلصق المحتوى"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "يؤدي منع لصق كلمة المرور إلى تقويض سياسة الأمان الجيدة. [مزيد من المعلومات](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

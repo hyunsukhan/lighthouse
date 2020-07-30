@@ -47,7 +47,6 @@ results.html
 *.lcov
 
 # dev files
-.appveyor.yml
 .DS_Store
 .editorconfig
 .eslintignore

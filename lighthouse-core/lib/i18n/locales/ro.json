@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evită solicitarea permisiunii de notificare la încărcarea paginii"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elemente cu probleme"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Împiedicarea inserării parolelor subminează buna politică de securitate. [Află mai multe](https://web.dev/password-inputs-can-be-pasted-into/)."
   },
