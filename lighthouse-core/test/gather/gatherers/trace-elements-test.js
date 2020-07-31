@@ -344,11 +344,11 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
     expect(result).toEqual([
       {nodeId: 5, animations: [
-        {name: 'alpha', failureReasons: 8192},
-        {name: 'beta', failureReasons: 8192},
+        {name: 'alpha', failureReasonsMask: 8192},
+        {name: 'beta', failureReasonsMask: 8192},
       ]},
       {nodeId: 6, animations: [
-        {name: 'gamma', failureReasons: 8192},
+        {name: 'gamma', failureReasonsMask: 8192},
       ]},
     ]);
   });
@@ -444,7 +444,7 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       {
         ...animationNodeData,
         animations: [
-          {name: 'example', failureReasons: 8192},
+          {name: 'example', failureReasonsMask: 8192},
         ],
         nodeId: 5,
       },

@@ -76,41 +76,36 @@ class NonCompositedAnimations extends Audit {
       };
     }
 
-    const animatedElements = artifacts.TraceElements
-      .filter(e => e.traceEventType === 'animation');
+    /** @type LH.Audit.Details.TableItem[] */
+    const results = artifacts.TraceElements
+      .filter(element => element.traceEventType === 'animation')
+      .map(element => {
+        /** @type LH.Audit.Details.NodeValue */
+        const node = {
+          type: 'node',
+          path: element.devtoolsNodePath,
+          selector: element.selector,
+          nodeLabel: element.nodeLabel,
+          snippet: element.snippet,
+        };
 
-    /** @type {LH.Audit.Details.TableItem[]} */
-    const results = [];
-    animatedElements.forEach(element => {
-      /** @type LH.Audit.Details.NodeValue */
-      const node = {
-        type: 'node',
-        path: element.devtoolsNodePath,
-        selector: element.selector,
-        nodeLabel: element.nodeLabel,
-        snippet: element.snippet,
-      };
-
-      /** @type LH.Audit.Details.TableItem[] */
-      const items = [];
-      if (!element.animations) return;
-      element.animations.forEach(({name, failureReasons}) => {
-        if (!failureReasons) return;
-        const failureStrings = getActionableFailureReasons(failureReasons);
-        items.push({
-          animation: name || '*UNNAMED ANIMATION*',
-          failureReasons: failureStrings.join(', '),
-        });
+        return {
+          node,
+          failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
+          subItems: {
+            type: 'subitems',
+            items: (element.animations || [])
+              .filter(({failureReasonsMask}) => failureReasonsMask !== undefined)
+              .map(({name, failureReasonsMask}) => {
+                const failureStrings = getActionableFailureReasons(failureReasonsMask || 0);
+                return {
+                  animation: name || '*UNNAMED ANIMATION*',
+                  failureReasons: failureStrings.join(', '),
+                }
+              }),
+          },
+        };
       });
-      results.push({
-        node,
-        failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
-        subItems: {
-          type: 'subitems',
-          items,
-        },
-      });
-    });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [

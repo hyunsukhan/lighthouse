@@ -21,9 +21,9 @@ describe('Non-composited animations audit', () => {
           snippet: '<div id="animated-boi">',
           nodeId: 4,
           animations: [
-            {failureReasons: 8192},
-            {name: 'alpha', failureReasons: 8192},
-            {name: 'beta', failureReasons: 8192},
+            {failureReasonsMask: 8192},
+            {name: 'alpha', failureReasonsMask: 8192},
+            {name: 'beta', failureReasonsMask: 8192},
           ],
         },
       ],

@@ -16,7 +16,7 @@ const pageFunctions = require('../../lib/page-functions.js');
 const TraceProcessor = require('../../lib/tracehouse/trace-processor.js');
 const RectHelpers = require('../../lib/rect-helpers.js');
 
-/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasons?: number}[]}} TraceElementData */
+/** @typedef {{nodeId: number, score?: number, animations?: {name?: string, failureReasonsMask?: number}[]}} TraceElementData */
 
 /**
  * @this {HTMLElement}
@@ -199,15 +199,15 @@ class TraceElements extends Gatherer {
       animationPairs.set(local, pair);
     }
 
-    /** @type Map<number, Set<{animationId: string, failureReasons?: number}>> */
+    /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number}>> */
     const elementAnimations = new Map();
     for (const [, {begin, status}] of animationPairs) {
       const nodeId = this.getNodeIDFromTraceEvent(begin);
       const animationId = this.getAnimationIDFromTraceEvent(begin);
-      const failureReasons = this.getFailureReasonsFromTraceEvent(status);
+      const failureReasonsMask = this.getFailureReasonsFromTraceEvent(status);
       if (!nodeId || !animationId) continue;
       const animationIds = elementAnimations.get(nodeId) || new Set();
-      animationIds.add({animationId, failureReasons});
+      animationIds.add({animationId, failureReasonsMask});
       elementAnimations.set(nodeId, animationIds);
     }
 
@@ -215,9 +215,9 @@ class TraceElements extends Gatherer {
     const animatedElementData = [];
     for (const [nodeId, animationIds] of elementAnimations) {
       const animations = [];
-      for (const {animationId, failureReasons} of animationIds) {
+      for (const {animationId, failureReasonsMask} of animationIds) {
         const animationName = await this.resolveAnimationName(passContext, animationId);
-        animations.push({name: animationName, failureReasons});
+        animations.push({name: animationName, failureReasonsMask});
       }
       animatedElementData.push({nodeId, animations});
     }

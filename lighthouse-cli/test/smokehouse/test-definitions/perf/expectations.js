@@ -221,7 +221,7 @@ module.exports = [
               // https://chromiumdash.appspot.com/commit/995baabedf9e70d16deafc4bc37a2b215a9b8ec9
               _minChromiumMilestone: 86,
               name: 'anim',
-              failureReasons: 8224,
+              failureReasonsMask: 8224,
             },
           ],
         },
