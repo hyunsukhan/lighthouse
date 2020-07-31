@@ -172,9 +172,15 @@ async function saveResults(runnerResult, flags) {
 async function potentiallyKillChrome(launchedChrome) {
   if (!launchedChrome) return;
 
+  /** @type {NodeJS.Timeout} */
+  let timeout;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeout = setTimeout(() => reject(new Error('Timed out waiting to kill Chrome')), 5000);
+  });
+
   return Promise.race([
     launchedChrome.kill(),
-    new Promise((_, reject) => setTimeout(reject, 5000, 'Timed out.')),
+    timeoutPromise,
   ]).catch(async err => {
     const runningProcesses = await psList();
     if (!runningProcesses.some(proc => proc.pid === launchedChrome.pid)) {
@@ -183,6 +189,8 @@ async function potentiallyKillChrome(launchedChrome) {
     }
 
     throw new Error(`Couldn't quit Chrome process. ${err}`);
+  }).finally(() => {
+    clearTimeout(timeout);
   });
 }
 

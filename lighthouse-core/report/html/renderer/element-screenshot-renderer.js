@@ -7,8 +7,8 @@
 
 /**
  * @fileoverview These functions define {Rect}s and {Size}s using two different coordinate spaces:
- *   1. Screenshot coords: where 0,0 is the top left of the screenshot image
- *   2. Display coords: that match the CSS pixel coordinate space of the LH report's page.
+ *   1. Screenshot coords (SC suffix): where 0,0 is the top left of the screenshot image
+ *   2. Display coords (DC suffix): that match the CSS pixel coordinate space of the LH report's page.
  */
 
 /* globals self Util */
@@ -43,22 +43,21 @@ class ElementScreenshotRenderer {
    * Given the location of an element and the sizes of the preview and screenshot,
    * compute the absolute positions (in screenshot coordinate scale) of the screenshot content
    * and the highlighted rect around the element.
-   * @param {Rect} elementRectInScreenshotCoords
-   * @param {Size} elementPreviewSizeInScreenshotCoords
+   * @param {Rect} elementRectSC
+   * @param {Size} elementPreviewSizeSC
    * @param {Size} screenshotSize
    */
-  static getScreenshotPositions(elementRectInScreenshotCoords,
-      elementPreviewSizeInScreenshotCoords, screenshotSize) {
-    const elementRectCenter = getRectCenterPoint(elementRectInScreenshotCoords);
+  static getScreenshotPositions(elementRectSC, elementPreviewSizeSC, screenshotSize) {
+    const elementRectCenter = getRectCenterPoint(elementRectSC);
 
     // Try to center clipped region.
     const screenshotLeftVisibleEdge = clamp(
-      elementRectCenter.x - elementPreviewSizeInScreenshotCoords.width / 2,
-      0, screenshotSize.width - elementPreviewSizeInScreenshotCoords.width
+      elementRectCenter.x - elementPreviewSizeSC.width / 2,
+      0, screenshotSize.width - elementPreviewSizeSC.width
     );
     const screenshotTopVisisbleEdge = clamp(
-      elementRectCenter.y - elementPreviewSizeInScreenshotCoords.height / 2,
-      0, screenshotSize.height - elementPreviewSizeInScreenshotCoords.height
+      elementRectCenter.y - elementPreviewSizeSC.height / 2,
+      0, screenshotSize.height - elementPreviewSizeSC.height
     );
 
     return {
@@ -67,8 +66,8 @@ class ElementScreenshotRenderer {
         top: screenshotTopVisisbleEdge,
       },
       clip: {
-        left: elementRectInScreenshotCoords.left - screenshotLeftVisibleEdge,
-        top: elementRectInScreenshotCoords.top - screenshotTopVisisbleEdge,
+        left: elementRectSC.left - screenshotLeftVisibleEdge,
+        top: elementRectSC.top - screenshotTopVisisbleEdge,
       },
     };
   }
@@ -90,11 +89,9 @@ class ElementScreenshotRenderer {
 
     // Normalize values between 0-1.
     const top = positionClip.top / elementPreviewSize.height;
-    const bottom =
-      top + elementRect.height / elementPreviewSize.height;
+    const bottom = top + elementRect.height / elementPreviewSize.height;
     const left = positionClip.left / elementPreviewSize.width;
-    const right =
-      left + elementRect.width / elementPreviewSize.width;
+    const right = left + elementRect.width / elementPreviewSize.width;
 
     const polygonsPoints = [
       `0,0             1,0            1,${top}          0,${top}`,
@@ -148,7 +145,7 @@ class ElementScreenshotRenderer {
 
       const overlay = dom.createElement('div');
       overlay.classList.add('lh-element-screenshot__overlay');
-      const elementRectInScreenshotCoords = {
+      const elementRectSC = {
         width: Number(el.dataset['rectWidth']),
         height: Number(el.dataset['rectHeight']),
         left: Number(el.dataset['rectLeft']),
@@ -160,7 +157,7 @@ class ElementScreenshotRenderer {
         dom,
         templateContext,
         fullPageScreenshot,
-        elementRectInScreenshotCoords,
+        elementRectSC,
         maxLightboxSize
       ));
       overlay.addEventListener('click', () => {
@@ -174,15 +171,15 @@ class ElementScreenshotRenderer {
   /**
    * Given the size of the element in the screenshot and the total available size of our preview container,
    * compute the factor by which we need to zoom out to view the entire element with context.
-   * @param {LH.Artifacts.Rect} elementRectInScreenshotCoords
-   * @param {Size} renderContainerSizeInDisplayCoords
+   * @param {LH.Artifacts.Rect} elementRectSC
+   * @param {Size} renderContainerSizeDC
    * @return {number}
    */
-  static _computeZoomFactor(elementRectInScreenshotCoords, renderContainerSizeInDisplayCoords) {
+  static _computeZoomFactor(elementRectSC, renderContainerSizeDC) {
     const targetClipToViewportRatio = 0.75;
     const zoomRatioXY = {
-      x: renderContainerSizeInDisplayCoords.width / elementRectInScreenshotCoords.width,
-      y: renderContainerSizeInDisplayCoords.height / elementRectInScreenshotCoords.height,
+      x: renderContainerSizeDC.width / elementRectSC.width,
+      y: renderContainerSizeDC.height / elementRectSC.height,
     };
     const zoomFactor = targetClipToViewportRatio * Math.min(zoomRatioXY.x, zoomRatioXY.y);
     return Math.min(1, zoomFactor);
@@ -194,49 +191,46 @@ class ElementScreenshotRenderer {
    * @param {DOM} dom
    * @param {ParentNode} templateContext
    * @param {LH.Audit.Details.FullPageScreenshot} fullPageScreenshot
-   * @param {LH.Artifacts.Rect} elementRectInScreenshotCoords Region of screenshot to highlight.
-   * @param {Size} maxRenderSizeInDisplayCoords e.g. maxThumbnailSize or maxLightboxSize.
+   * @param {LH.Artifacts.Rect} elementRectSC Region of screenshot to highlight.
+   * @param {Size} maxRenderSizeDC e.g. maxThumbnailSize or maxLightboxSize.
    * @return {Element}
    */
-  static render(dom, templateContext, fullPageScreenshot, elementRectInScreenshotCoords,
-      maxRenderSizeInDisplayCoords) {
+  static render(dom, templateContext, fullPageScreenshot, elementRectSC, maxRenderSizeDC) {
     const tmpl = dom.cloneTemplate('#tmpl-lh-element-screenshot', templateContext);
     const containerEl = dom.find('.lh-element-screenshot', tmpl);
 
-    containerEl.dataset['rectWidth'] = elementRectInScreenshotCoords.width.toString();
-    containerEl.dataset['rectHeight'] = elementRectInScreenshotCoords.height.toString();
-    containerEl.dataset['rectLeft'] = elementRectInScreenshotCoords.left.toString();
-    containerEl.dataset['rectTop'] = elementRectInScreenshotCoords.top.toString();
+    containerEl.dataset['rectWidth'] = elementRectSC.width.toString();
+    containerEl.dataset['rectHeight'] = elementRectSC.height.toString();
+    containerEl.dataset['rectLeft'] = elementRectSC.left.toString();
+    containerEl.dataset['rectTop'] = elementRectSC.top.toString();
 
     // Zoom out when highlighted region takes up most of the viewport.
     // This provides more context for where on the page this element is.
-    const zoomFactor =
-      this._computeZoomFactor(elementRectInScreenshotCoords, maxRenderSizeInDisplayCoords);
+    const zoomFactor = this._computeZoomFactor(elementRectSC, maxRenderSizeDC);
 
-    const elementPreviewSizeInScreenshotCoords = {
-      width: maxRenderSizeInDisplayCoords.width / zoomFactor,
-      height: maxRenderSizeInDisplayCoords.height / zoomFactor,
+    const elementPreviewSizeSC = {
+      width: maxRenderSizeDC.width / zoomFactor,
+      height: maxRenderSizeDC.height / zoomFactor,
     };
-    elementPreviewSizeInScreenshotCoords.width =
-      Math.min(fullPageScreenshot.width, elementPreviewSizeInScreenshotCoords.width);
+    elementPreviewSizeSC.width = Math.min(fullPageScreenshot.width, elementPreviewSizeSC.width);
     /* This preview size is either the size of the thumbnail or size of the Lightbox */
-    const elementPreviewSizeInDisplayCoords = {
-      width: elementPreviewSizeInScreenshotCoords.width * zoomFactor,
-      height: elementPreviewSizeInScreenshotCoords.height * zoomFactor,
+    const elementPreviewSizeDC = {
+      width: elementPreviewSizeSC.width * zoomFactor,
+      height: elementPreviewSizeSC.height * zoomFactor,
     };
 
     const positions = ElementScreenshotRenderer.getScreenshotPositions(
-      elementRectInScreenshotCoords,
-      elementPreviewSizeInScreenshotCoords,
+      elementRectSC,
+      elementPreviewSizeSC,
       {width: fullPageScreenshot.width, height: fullPageScreenshot.height}
     );
 
     const contentEl = dom.find('.lh-element-screenshot__content', containerEl);
-    contentEl.style.top = `-${elementPreviewSizeInDisplayCoords.height}px`;
+    contentEl.style.top = `-${elementPreviewSizeDC.height}px`;
 
     const imageEl = dom.find('.lh-element-screenshot__image', containerEl);
-    imageEl.style.width = elementPreviewSizeInDisplayCoords.width + 'px';
-    imageEl.style.height = elementPreviewSizeInDisplayCoords.height + 'px';
+    imageEl.style.width = elementPreviewSizeDC.width + 'px';
+    imageEl.style.height = elementPreviewSizeDC.height + 'px';
 
     imageEl.style.backgroundPositionY = -(positions.screenshot.top * zoomFactor) + 'px';
     imageEl.style.backgroundPositionX = -(positions.screenshot.left * zoomFactor) + 'px';
@@ -244,17 +238,22 @@ class ElementScreenshotRenderer {
       `${fullPageScreenshot.width * zoomFactor}px ${fullPageScreenshot.height * zoomFactor}px`;
 
     const markerEl = dom.find('.lh-element-screenshot__element-marker', containerEl);
-    markerEl.style.width = elementRectInScreenshotCoords.width * zoomFactor + 'px';
-    markerEl.style.height = elementRectInScreenshotCoords.height * zoomFactor + 'px';
+    markerEl.style.width = elementRectSC.width * zoomFactor + 'px';
+    markerEl.style.height = elementRectSC.height * zoomFactor + 'px';
     markerEl.style.left = positions.clip.left * zoomFactor + 'px';
     markerEl.style.top = positions.clip.top * zoomFactor + 'px';
 
     const maskEl = dom.find('.lh-element-screenshot__mask', containerEl);
-    maskEl.style.width = elementPreviewSizeInDisplayCoords.width + 'px';
-    maskEl.style.height = elementPreviewSizeInDisplayCoords.height + 'px';
+    maskEl.style.width = elementPreviewSizeDC.width + 'px';
+    maskEl.style.height = elementPreviewSizeDC.height + 'px';
 
-    ElementScreenshotRenderer.renderClipPathInScreenshot(dom, maskEl, positions.clip,
-      elementRectInScreenshotCoords, elementPreviewSizeInScreenshotCoords);
+    ElementScreenshotRenderer.renderClipPathInScreenshot(
+      dom,
+      maskEl,
+      positions.clip,
+      elementRectSC,
+      elementPreviewSizeSC
+    );
 
     return containerEl;
   }

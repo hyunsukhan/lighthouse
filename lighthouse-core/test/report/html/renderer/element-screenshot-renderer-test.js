@@ -43,13 +43,13 @@ describe('ElementScreenshotRenderer', () => {
       width: 1000,
       height: 1000,
     };
-    const elementRectInScreenshotCoords = {
+    const elementRectSC = {
       left: 50,
       top: 50,
       width: 200,
       height: 300,
     };
-    const renderContainerSizeInDisplayCoords = {
+    const renderContainerSizeDC = {
       width: 500,
       height: 500,
     };
@@ -57,8 +57,8 @@ describe('ElementScreenshotRenderer', () => {
       dom,
       dom.document(),
       fullPageScreenshot,
-      elementRectInScreenshotCoords,
-      renderContainerSizeInDisplayCoords
+      elementRectSC,
+      renderContainerSizeDC
     );
 
     /* eslint-disable max-len */
