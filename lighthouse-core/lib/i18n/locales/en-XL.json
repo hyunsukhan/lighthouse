@@ -1514,9 +1514,6 @@
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
     "message": "F̂áîĺîńĝ Él̂ém̂én̂t́ŝ"
   },
-  "lighthouse-core/lib/i18n/i18n.js | columnFailureReasons": {
-    "message": "F̂áîĺûŕê Ŕêáŝón̂ś"
-  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "L̂óĉát̂íôń"
   },
@@ -1525,6 +1522,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
     "message": "Ôv́êŕ B̂úd̂ǵêt́"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnReasons": {
+    "message": "R̂éâśôńŝ"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "R̂éq̂úêśt̂ś"

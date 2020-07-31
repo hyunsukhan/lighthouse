@@ -1514,9 +1514,6 @@
   "lighthouse-core/lib/i18n/i18n.js | columnFailingElem": {
     "message": "Failing Elements"
   },
-  "lighthouse-core/lib/i18n/i18n.js | columnFailureReasons": {
-    "message": "Failure Reasons"
-  },
   "lighthouse-core/lib/i18n/i18n.js | columnLocation": {
     "message": "Location"
   },
@@ -1525,6 +1522,9 @@
   },
   "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
     "message": "Over Budget"
+  },
+  "lighthouse-core/lib/i18n/i18n.js | columnReasons": {
+    "message": "Reasons"
   },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Requests"
