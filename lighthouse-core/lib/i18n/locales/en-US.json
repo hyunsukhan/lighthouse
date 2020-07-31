@@ -1523,9 +1523,6 @@
   "lighthouse-core/lib/i18n/i18n.js | columnOverBudget": {
     "message": "Over Budget"
   },
-  "lighthouse-core/lib/i18n/i18n.js | columnReasons": {
-    "message": "Reasons"
-  },
   "lighthouse-core/lib/i18n/i18n.js | columnRequests": {
     "message": "Requests"
   },

@@ -86,8 +86,6 @@ const UIStrings = {
   columnElement: 'Element',
   /** Label for a column in a data table; entries will be the number of milliseconds since the page started loading. */
   columnStartTime: 'Start Time',
-  /** Label for a column in a data table; entries will be the reasons explaining a failure for that item. (e.g the reason why the browser couldn't optimize a DOM element) */
-  columnReasons: 'Reasons',
   /** Label for a column in a data table; entries will be the total number of milliseconds from the start time until the end time. */
   columnDuration: 'Duration',
   /** Label for a column in a data table; entries will be a representation of a DOM element that did not meet certain suggestions. */
