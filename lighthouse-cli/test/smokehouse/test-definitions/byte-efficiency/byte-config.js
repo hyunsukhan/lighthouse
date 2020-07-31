@@ -5,7 +5,6 @@
  */
 'use strict';
 
-
 /**
  * @type {LH.Config.Json}
  * Config file for running byte efficiency smokehouse audits.
