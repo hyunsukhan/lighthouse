@@ -25,7 +25,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
 /**
  * Each failure reason is represented by a bit flag. The bit shift operator '<<' is used to define which bit corresponds to each failure reason.
- * https://source.chromium.org/chromium/chromium/src/+/master:third_party/blink/renderer/core/animation/compositor_animations.h;l=58;drc=f959aba6099c5d767f885b7f4632955b463dc41d?originalUrl=https:%2F%2Fcs.chromium.org%2F
+ * https://source.chromium.org/search?q=f:compositor_animations.h%20%22enum%20FailureReason%22
  * @type {{flag: number, text: string}[]}
  */
 const ACTIONABLE_FAILURE_REASONS = [
@@ -43,14 +43,9 @@ const ACTIONABLE_FAILURE_REASONS = [
  * @return {string[]}
  */
 function getActionableFailureReasons(failureCode) {
-  /** @type {string[]} */
-  const failureReasons = [];
-  ACTIONABLE_FAILURE_REASONS.forEach(reason => {
-    if (failureCode & reason.flag) {
-      failureReasons.push(reason.text);
-    }
-  });
-  return failureReasons;
+  return ACTIONABLE_FAILURE_REASONS
+    .filter(reason => failureCode & reason.flag)
+    .map(reason => reason.text);
 }
 
 class NonCompositedAnimations extends Audit {
@@ -72,7 +67,7 @@ class NonCompositedAnimations extends Audit {
    * @return {Promise<LH.Audit.Product>}
    */
   static async audit(artifacts) {
-    // This audit reqiures m86
+    // COMPAT: This audit requires m86
     const match = artifacts.HostUserAgent.match(/Chrome\/(\d+)/);
     if (!match || Number(match[1]) < 86) {
       return {
