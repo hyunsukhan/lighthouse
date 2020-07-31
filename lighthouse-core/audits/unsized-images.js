@@ -25,7 +25,7 @@ const UIStrings = {
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 
-class SizedImages extends Audit {
+class UnsizedImages extends Audit {
   /**
    * @return {LH.Audit.Meta}
    */
@@ -72,10 +72,10 @@ class SizedImages extends Audit {
     const attrHeight = image.attributeHeight;
     const cssWidth = image.cssWidth;
     const cssHeight = image.cssHeight;
-    const widthIsValidAttribute = SizedImages.isValidAttr(attrWidth);
-    const widthIsValidCss = SizedImages.isValidCss(cssWidth);
-    const heightIsValidAttribute = SizedImages.isValidAttr(attrHeight);
-    const heightIsValidCss = SizedImages.isValidCss(cssHeight);
+    const widthIsValidAttribute = UnsizedImages.isValidAttr(attrWidth);
+    const widthIsValidCss = UnsizedImages.isValidCss(cssWidth);
+    const heightIsValidAttribute = UnsizedImages.isValidAttr(attrHeight);
+    const heightIsValidCss = UnsizedImages.isValidCss(cssHeight);
     const validWidth = widthIsValidAttribute || widthIsValidCss;
     const validHeight = heightIsValidAttribute || heightIsValidCss;
     return validWidth && validHeight;
@@ -93,7 +93,7 @@ class SizedImages extends Audit {
     for (const image of images) {
       const positioning = image.positioning;
       const isFixedImage = positioning === 'fixed' || positioning === 'absolute';
-      if (SizedImages.isSizedImage(image) || isFixedImage) continue;
+      if (UnsizedImages.isSizedImage(image) || isFixedImage) continue;
       const url = URL.elideDataURI(image.src);
       unsizedImages.push({
         url,
@@ -122,5 +122,5 @@ class SizedImages extends Audit {
   }
 }
 
-module.exports = SizedImages;
+module.exports = UnsizedImages;
 module.exports.UIStrings = UIStrings;

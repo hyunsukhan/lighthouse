@@ -5,7 +5,7 @@
  */
 'use strict';
 
-const UnSizedImagesAudit = require('../../audits/unsized-images.js');
+const UnsizedImagesAudit = require('../../audits/unsized-images.js');
 
 /* eslint-env jest */
 
@@ -18,7 +18,7 @@ function generateImage(props, src = 'https://google.com/logo.png', isCss = false
 
 describe('Sized images audit', () => {
   function runAudit(props) {
-    const result = UnSizedImagesAudit.audit({
+    const result = UnsizedImagesAudit.audit({
       ImageElements: [
         generateImage(props),
       ],
@@ -352,7 +352,7 @@ describe('Sized images audit', () => {
   });
 
   it('is not applicable when there are no images', async () => {
-    const result = await UnSizedImagesAudit.audit({
+    const result = await UnsizedImagesAudit.audit({
       ImageElements: [],
     });
     expect(result.notApplicable).toEqual(true);
@@ -360,7 +360,7 @@ describe('Sized images audit', () => {
   });
 
   it('can return multiple unsized images', async () => {
-    const result = await UnSizedImagesAudit.audit({
+    const result = await UnsizedImagesAudit.audit({
       ImageElements: [
         generateImage(
           {
@@ -398,55 +398,55 @@ describe('Sized images audit', () => {
 
 describe('Size attribute validity check', () => {
   it('fails if it is empty', () => {
-    expect(UnSizedImagesAudit.isValidAttr('')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('')).toEqual(false);
   });
 
   it('fails on non-numeric characters', () => {
-    expect(UnSizedImagesAudit.isValidAttr('zero')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('1002$')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('s-5')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('3,000')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('100.0')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('2/3')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('-2020')).toEqual(false);
-    expect(UnSizedImagesAudit.isValidAttr('+2020')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('zero')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('1002$')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('s-5')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('3,000')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('100.0')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('2/3')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('-2020')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('+2020')).toEqual(false);
   });
 
   it('fails on zero input', () => {
-    expect(UnSizedImagesAudit.isValidAttr('0')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidAttr('0')).toEqual(false);
   });
 
   it('passes on non-zero non-negative integer input', () => {
-    expect(UnSizedImagesAudit.isValidAttr('1')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidAttr('250')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidAttr('4000000')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidAttr('1')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidAttr('250')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidAttr('4000000')).toEqual(true);
   });
 });
 
 describe('CSS size property validity check', () => {
   it('fails if it was never defined', () => {
-    expect(UnSizedImagesAudit.isValidCss(undefined)).toEqual(false);
+    expect(UnsizedImagesAudit.isValidCss(undefined)).toEqual(false);
   });
 
   it('fails if it is empty', () => {
-    expect(UnSizedImagesAudit.isValidCss('')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidCss('')).toEqual(false);
   });
 
   it('fails if it is auto', () => {
-    expect(UnSizedImagesAudit.isValidCss('auto')).toEqual(false);
+    expect(UnsizedImagesAudit.isValidCss('auto')).toEqual(false);
   });
 
   it('passes if it is defined and not auto', () => {
-    expect(UnSizedImagesAudit.isValidCss('200')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('300.5')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('150px')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('80%')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('5cm')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('20rem')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('7vw')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('-20')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('0')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('three')).toEqual(true);
-    expect(UnSizedImagesAudit.isValidCss('-20')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('200')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('300.5')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('150px')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('80%')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('5cm')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('20rem')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('7vw')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('-20')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('0')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('three')).toEqual(true);
+    expect(UnsizedImagesAudit.isValidCss('-20')).toEqual(true);
   });
 });
