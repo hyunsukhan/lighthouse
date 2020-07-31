@@ -314,23 +314,16 @@ module.exports = [
               {
                 node: {
                   type: 'node',
-                  path: '1,HTML,1,BODY,1,DIV',
+                  path: '2,HTML,1,BODY,1,DIV',
                   selector: 'body > div#animated-boi',
                   nodeLabel: 'div',
                   snippet: '<div id="animated-boi">',
                 },
                 subItems: {
                   items: [
-                    {
-                      // From JavaScript `.animate` which has no animation ID
-                      failureReason: 'Unsupported CSS Property',
-                    },
-                    {
-                      failureReason: 'Unsupported CSS Property ("alpha")',
-                    },
-                    {
-                      failureReason: 'Unsupported CSS Property ("beta")',
-                    },
+                    {failureReason: 'Unsupported CSS Property'}, // From JavaScript `.animate` which has no animation display name
+                    {failureReason: 'Unsupported CSS Property ("alpha")'},
+                    {failureReason: 'Unsupported CSS Property ("beta")'},
                   ],
                 },
               },
