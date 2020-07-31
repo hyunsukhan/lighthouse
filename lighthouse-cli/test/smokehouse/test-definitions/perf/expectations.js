@@ -322,16 +322,13 @@ module.exports = [
                 subItems: {
                   items: [
                     {
-                      animation: '*UNNAMED ANIMATION*',
-                      failureReasons: 'Unsupported CSS Property',
+                      failureReason: 'Unsupported CSS Property',
                     },
                     {
-                      animation: 'alpha',
-                      failureReasons: 'Unsupported CSS Property',
+                      failureReason: 'Unsupported CSS Property ("alpha")',
                     },
                     {
-                      animation: 'beta',
-                      failureReasons: 'Unsupported CSS Property',
+                      failureReason: 'Unsupported CSS Property ("beta")',
                     },
                   ],
                 },

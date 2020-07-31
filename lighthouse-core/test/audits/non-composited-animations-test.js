@@ -44,17 +44,39 @@ describe('Non-composited animations audit', () => {
     });
     expect(auditResult.details.items[0].subItems.items).toEqual([
       {
-        animation: '*UNNAMED ANIMATION*',
-        failureReasons: 'Unsupported CSS Property',
+        failureReason: 'Unsupported CSS Property',
       },
       {
-        animation: 'alpha',
-        failureReasons: 'Unsupported CSS Property',
+        failureReason: 'Unsupported CSS Property ("alpha")',
       },
       {
-        animation: 'beta',
-        failureReasons: 'Unsupported CSS Property',
+        failureReason: 'Unsupported CSS Property ("beta")',
       },
     ]);
+  });
+  
+  it('does not surface composited animation', async () => {
+    const artifacts = {
+      TraceElements: [
+        {
+          traceEventType: 'animation',
+          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+          selector: 'body > div#animated-boi',
+          nodeLabel: 'div',
+          snippet: '<div id="animated-boi">',
+          nodeId: 4,
+          animations: [
+            {failureReasonsMask: 0},
+            {name: 'alpha', failureReasonsMask: 0},
+          ],
+        },
+      ],
+      HostUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
+    };
+
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
+    expect(auditResult.score).toEqual(1);
+    expect(auditResult.details.items).toHaveLength(0);
   });
 });

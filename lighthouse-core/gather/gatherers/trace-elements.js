@@ -100,6 +100,7 @@ class TraceElements extends Gatherer {
       });
       const nameProperty = response.result.find((property) => property.name === 'animationName');
       const animationName = nameProperty && nameProperty.value && nameProperty.value.value;
+      if (animationName === '') return undefined;
       return animationName;
     } catch (err) {
       // Animation name is not mission critical information and can be evicted, so don't throw fatally if we can't find it.
@@ -193,7 +194,7 @@ class TraceElements extends Gatherer {
       const pair = animationPairs.get(local) || {begin: undefined, status: undefined};
       if (event.ph === 'b') {
         pair.begin = event;
-      } else if (event.ph === 'n' && event.args.data && event.args.data.compositeFailed) {
+      } else if (event.ph === 'n' && event.args.data && event.args.data.compositeFailed !== undefined) {
         pair.status = event;
       }
       animationPairs.set(local, pair);

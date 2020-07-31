@@ -78,7 +78,10 @@ class NonCompositedAnimations extends Audit {
 
     /** @type LH.Audit.Details.TableItem[] */
     const results = artifacts.TraceElements
-      .filter(element => element.traceEventType === 'animation')
+      .filter(element => {
+        return element.traceEventType === 'animation' &&
+          element.animations && element.animations.find(a => a.failureReasonsMask);
+      })
       .map(element => {
         /** @type LH.Audit.Details.NodeValue */
         const node = {
@@ -95,14 +98,22 @@ class NonCompositedAnimations extends Audit {
           subItems: {
             type: 'subitems',
             items: (element.animations || [])
-              .filter(({failureReasonsMask}) => failureReasonsMask !== undefined)
+              .filter(({failureReasonsMask}) => failureReasonsMask)
               .map(({name, failureReasonsMask}) => {
                 const failureStrings = getActionableFailureReasons(failureReasonsMask || 0);
                 return {
-                  animation: name || '*UNNAMED ANIMATION*',
-                  failureReasons: failureStrings.join(', '),
+                  name,
+                  failureStrings,
                 };
-              }),
+              })
+              .reduce((result, {name, failureStrings}) => {
+                result.push(
+                  ...failureStrings.map(str => {
+                    return {failureReason: str + (name ? ` ("${name}")` : '')}
+                  })
+                );
+                return result;
+              }, Array()),
           },
         };
       });
@@ -111,7 +122,7 @@ class NonCompositedAnimations extends Audit {
     const headings = [
       /* eslint-disable max-len */
       {key: 'node', itemType: 'node', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnElement)},
-      {key: 'failureReasons', itemType: 'text', subItemsHeading: {key: 'failureReasons', itemType: 'text'}, text: str_(i18n.UIStrings.columnReasons)},
+      {key: 'failureReasons', itemType: 'text', subItemsHeading: {key: 'failureReason', itemType: 'text'}, text: str_(i18n.UIStrings.columnReasons)},
       /* eslint-enable max-len */
     ];
 

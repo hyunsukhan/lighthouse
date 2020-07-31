@@ -313,7 +313,7 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     expectEqualFloat(total, 2.5);
   });
 
-  it('gets animated node ids with multiple animations', async () => {
+  it('gets animated node ids with non-composited animations', async () => {
     const connectionStub = new Connection();
     connectionStub.sendCommand = createMockSendCommandFn()
       .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 1}})
@@ -324,12 +324,12 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 2}})
       .mockResponse('Runtime.getProperties', {result: [{
         name: 'animationName',
-        value: {type: 'string', value: 'beta'},
+        value: {type: 'string', value: ''},
       }]})
       .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 3}})
       .mockResponse('Runtime.getProperties', {result: [{
         name: 'animationName',
-        value: {type: 'string', value: 'gamma'},
+        value: {type: 'string', value: 'beta'},
       }]});
     const driver = new Driver(connectionStub);
     const traceEvents = [
@@ -345,10 +345,50 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     expect(result).toEqual([
       {nodeId: 5, animations: [
         {name: 'alpha', failureReasonsMask: 8192},
-        {name: 'beta', failureReasonsMask: 8192},
+        {failureReasonsMask: 8192},
       ]},
       {nodeId: 6, animations: [
-        {name: 'gamma', failureReasonsMask: 8192},
+        {name: 'beta', failureReasonsMask: 8192},
+      ]},
+    ]);
+  });
+
+  it('gets animated node ids with composited animations', async () => {
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 1}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'alpha'},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 2}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: ''},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 3}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'beta'},
+      }]});
+    const driver = new Driver(connectionStub);
+    const traceEvents = [
+      makeAnimationTraceEvent('0x363db876c1', 'b', {id: '1', nodeId: 5}),
+      makeAnimationTraceEvent('0x363db876c1', 'n', {compositeFailed: 0}),
+      makeAnimationTraceEvent('0x363db876c2', 'b', {id: '2', nodeId: 5}),
+      makeAnimationTraceEvent('0x363db876c2', 'n', {compositeFailed: 0}),
+      makeAnimationTraceEvent('0x363db876c3', 'b', {id: '3', nodeId: 6}),
+      makeAnimationTraceEvent('0x363db876c3', 'n', {compositeFailed: 0}),
+    ];
+
+    const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
+    expect(result).toEqual([
+      {nodeId: 5, animations: [
+        {name: 'alpha', failureReasonsMask: 0},
+        {failureReasonsMask: 0},
+      ]},
+      {nodeId: 6, animations: [
+        {name: 'beta', failureReasonsMask: 0},
       ]},
     ]);
   });
