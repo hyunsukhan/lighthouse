@@ -92,28 +92,28 @@ class NonCompositedAnimations extends Audit {
           snippet: element.snippet,
         };
 
+        const animations = element.animations || [];
+        const failureReasons = new Set();
+        animations.filter(({failureReasonsMask}) => failureReasonsMask)
+          .map(({name, failureReasonsMask}) => {
+            const failureStrings = getActionableFailureReasons(failureReasonsMask || 0);
+            return {
+              name,
+              failureStrings,
+            };
+          })
+          .forEach(({name, failureStrings}) => {
+            failureStrings.forEach(failureString => {
+              failureReasons.add(failureString + (name ? ` ("${name}")` : ''));
+            });
+          });
+
         return {
           node,
           failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
           subItems: {
             type: 'subitems',
-            items: [
-              ...(element.animations || [])
-                .filter(({failureReasonsMask}) => failureReasonsMask)
-                .map(({name, failureReasonsMask}) => {
-                  const failureStrings = getActionableFailureReasons(failureReasonsMask || 0);
-                  return {
-                    name,
-                    failureStrings,
-                  };
-                })
-                .reduce((result, {name, failureStrings}) => {
-                  failureStrings.forEach(failureString => {
-                    result.add(failureString + (name ? ` ("${name}")` : ''));
-                  });
-                  return result;
-                }, new Set())
-            ].map(failureReason => {
+            items: [...failureReasons].map(failureReason => {
               return {failureReason};
             }),
           },
