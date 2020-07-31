@@ -322,6 +322,7 @@ module.exports = [
                 subItems: {
                   items: [
                     {
+                      // From JavaScript `.animate` which has no animation ID
                       failureReason: 'Unsupported CSS Property',
                     },
                     {
