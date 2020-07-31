@@ -425,6 +425,8 @@ declare global {
           left: number;
           right: number;
         };
+        /** The CSS position attribute of the element */
+        positioning: string;
         /** Flags whether this element was an image via CSS background-image rather than <img> tag. */
         isCss: boolean;
         /** Flags whether this element was contained within a <picture> tag. */

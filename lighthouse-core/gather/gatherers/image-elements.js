@@ -31,6 +31,20 @@ function getClientRect(element) {
 }
 
 /**
+ * If an image is within `picture`, the `picture` element's positioning
+ * is what we want to collect, since that positioning is relevant to CLS.
+ * @param {Element} element
+ * @param {CSSStyleDeclaration} computedStyle
+ */
+function getPositioning(element, computedStyle) {
+  if (!!element.parentElement && element.parentElement.tagName === 'PICTURE') {
+    const parentStyle = window.getComputedStyle(element.parentElement);
+    return parentStyle.getPropertyValue('position');
+  }
+  return computedStyle.getPropertyValue('position');
+}
+
+/**
  * @param {Array<Element>} allElements
  * @return {Array<LH.Artifacts.ImageElement>}
  */
@@ -56,6 +70,7 @@ function getHTMLImages(allElements) {
       attributeHeight: element.getAttribute('height') || '',
       cssWidth: '', // this will get overwritten below
       cssHeight: '', // this will get overwritten below
+      positioning: getPositioning(element, computedStyle),
       isCss: false,
       // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
       loading: element.loading,
@@ -117,6 +132,7 @@ function getCSSImages(allElements) {
       attributeHeight: '',
       cssWidth: '',
       cssHeight: '',
+      positioning: getPositioning(element, style),
       isCss: true,
       isPicture: false,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
@@ -295,6 +311,7 @@ class ImageElements extends Gatherer {
       ${pageFunctions.getNodeLabelString};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${getClientRect.toString()};
+      ${getPositioning.toString()};
       ${getHTMLImages.toString()};
       ${getCSSImages.toString()};
       ${collectImageElementInfo.toString()};

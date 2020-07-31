@@ -246,13 +246,8 @@ const expectations = [
         'unsized-images': {
           details: {
             items: [
-              {url: /lighthouse-unoptimized\.jpg/},
               {url: /lighthouse-320x212-poor\.jpg/},
-              {url: /lighthouse-320x212-poor\.jpg/},
-              {url: /lighthouse-.+\?srcset/},
-              {url: /lighthouse-.+\?picture/},
-              {url: /lighthouse-320x212-poor\.jpg\?duplicate/},
-              {url: /lighthouse-480x320\.webp\?lazilyLoaded=true/},
+              {url: /lighthouse-320x212-poor\.jpg\?cssauto/},
             ],
           },
         },

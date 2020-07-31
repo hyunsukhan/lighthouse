@@ -91,7 +91,9 @@ class SizedImages extends Audit {
     const unsizedImages = [];
 
     for (const image of images) {
-      if (SizedImages.isSizedImage(image)) continue;
+      const positioning = image.positioning;
+      const isFixedImage = positioning === 'fixed' || positioning === 'absolute';
+      if (SizedImages.isSizedImage(image) || isFixedImage) continue;
       const url = URL.elideDataURI(image.src);
       unsizedImages.push({
         url,
