@@ -101,7 +101,7 @@ class NonCompositedAnimations extends Audit {
                 return {
                   animation: name || '*UNNAMED ANIMATION*',
                   failureReasons: failureStrings.join(', '),
-                }
+                };
               }),
           },
         };
