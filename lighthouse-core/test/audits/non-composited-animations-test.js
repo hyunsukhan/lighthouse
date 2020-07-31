@@ -54,7 +54,7 @@ describe('Non-composited animations audit', () => {
       },
     ]);
   });
-  
+
   it('does not surface composited animation', async () => {
     const artifacts = {
       TraceElements: [

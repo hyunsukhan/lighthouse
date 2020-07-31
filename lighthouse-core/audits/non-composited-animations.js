@@ -106,14 +106,14 @@ class NonCompositedAnimations extends Audit {
                   failureStrings,
                 };
               })
-              .reduce((result, {name, failureStrings}) => {
+              .reduce((/** @type {{failureReason: string}[]} */ result, {name, failureStrings}) => {
                 result.push(
                   ...failureStrings.map(str => {
-                    return {failureReason: str + (name ? ` ("${name}")` : '')}
+                    return {failureReason: str + (name ? ` ("${name}")` : '')};
                   })
                 );
                 return result;
-              }, Array()),
+              }, []),
           },
         };
       });

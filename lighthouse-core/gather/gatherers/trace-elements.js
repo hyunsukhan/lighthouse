@@ -194,7 +194,10 @@ class TraceElements extends Gatherer {
       const pair = animationPairs.get(local) || {begin: undefined, status: undefined};
       if (event.ph === 'b') {
         pair.begin = event;
-      } else if (event.ph === 'n' && event.args.data && event.args.data.compositeFailed !== undefined) {
+      } else if (
+        event.ph === 'n' &&
+          event.args.data &&
+          event.args.data.compositeFailed !== undefined) {
         pair.status = event;
       }
       animationPairs.set(local, pair);
