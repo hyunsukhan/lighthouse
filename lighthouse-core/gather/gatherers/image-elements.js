@@ -188,30 +188,13 @@ function findSizeDeclaration(style, property) {
  * @param {string} property
  * @returns {string | undefined}
  */
-function findMostSpecificMatchedCSSRule(matchedCSSRules = [], property) {
-  let maxSpecificity = -Infinity;
-  /** @type {LH.Crdp.CSS.CSSRule|undefined} */
-  let maxSpecificityRule;
-
-  for (const {rule, matchingSelectors} of matchedCSSRules) {
-    // hasSizeDeclaration from font-size.js using `.some()`.
-    if (!!rule.style && rule.style.cssProperties.some(({name}) => name === property)) {
-      const specificities = matchingSelectors.map(idx =>
-        FontSize.computeSelectorSpecificity(rule.selectorList.selectors[idx].text)
-      );
-      const specificity = Math.max(...specificities);
-      // Use greater OR EQUAL so that the last rule wins in the event of a tie
-      if (specificity >= maxSpecificity) {
-        maxSpecificity = specificity;
-        maxSpecificityRule = rule;
-      }
-    }
-  }
-
-  if (maxSpecificityRule) {
-    // @ts-expect-error the existence of the property object is checked in the for loop
-    return maxSpecificityRule.style.cssProperties.find(({name}) => name === property).value;
-  }
+function findMostSpecificCSSRule(matchedCSSRules, property) {
+  /** @type {function(LH.Crdp.CSS.CSSStyle): string | undefined} */
+  const isDeclarationofInterest = (declaration) => findSizeDeclaration(declaration, property);
+  const rule = FontSize.findMostSpecificMatchedCSSRule(matchedCSSRules, isDeclarationofInterest);
+  if (!rule) return;
+  // @ts-expect-error style is guaranteed to exist if a rule exists
+  return findSizeDeclaration(rule.style, property);
 }
 
 /**
@@ -229,7 +212,7 @@ function getEffectiveSizingRule({attributesStyle, inlineStyle, matchedCSSRules},
   const attributeRule = findSizeDeclaration(attributesStyle, property);
   if (attributeRule) return attributeRule;
   // Rules directly referencing the node come next.
-  const matchedRule = findMostSpecificMatchedCSSRule(matchedCSSRules, property);
+  const matchedRule = findMostSpecificCSSRule(matchedCSSRules, property);
   if (matchedRule) return matchedRule;
 }
 
