@@ -253,17 +253,22 @@ class ImageElements extends Gatherer {
    * @param {LH.Artifacts.ImageElement} element
    */
   async fetchSourceRules(driver, devtoolsNodePath, element) {
-    const {nodeId} = await driver.sendCommand('DOM.pushNodeByPathToFrontend', {
-      path: devtoolsNodePath,
-    });
-    if (!nodeId) return;
-    const matchedRules = await driver.sendCommand('CSS.getMatchedStylesForNode', {
-      nodeId: nodeId,
-    });
-    const sourceWidth = getEffectiveSizingRule(matchedRules, 'width');
-    const sourceHeight = getEffectiveSizingRule(matchedRules, 'height');
-    const sourceRules = {cssWidth: sourceWidth, cssHeight: sourceHeight};
-    Object.assign(element, sourceRules);
+    try {
+      const {nodeId} = await driver.sendCommand('DOM.pushNodeByPathToFrontend', {
+        path: devtoolsNodePath,
+      });
+      if (!nodeId) return;
+      const matchedRules = await driver.sendCommand('CSS.getMatchedStylesForNode', {
+        nodeId: nodeId,
+      });
+      const sourceWidth = getEffectiveSizingRule(matchedRules, 'width');
+      const sourceHeight = getEffectiveSizingRule(matchedRules, 'height');
+      const sourceRules = {cssWidth: sourceWidth, cssHeight: sourceHeight};
+      Object.assign(element, sourceRules);
+    } catch (err) {
+      if (/No node.*found/.test(err.message)) return;
+      throw err;
+    }
   }
 
   /**
