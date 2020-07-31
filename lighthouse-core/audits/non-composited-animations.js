@@ -111,7 +111,7 @@ class NonCompositedAnimations extends Audit {
     const headings = [
       /* eslint-disable max-len */
       {key: 'node', itemType: 'node', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnElement)},
-      {key: 'failureReasons', itemType: 'text', subItemsHeading: {key: 'failureReasons', itemType: 'text'}, text: str_(i18n.UIStrings.columnFailureReasons)},
+      {key: 'failureReasons', itemType: 'text', subItemsHeading: {key: 'failureReasons', itemType: 'text'}, text: str_(i18n.UIStrings.columnReasons)},
       /* eslint-enable max-len */
     ];
 
