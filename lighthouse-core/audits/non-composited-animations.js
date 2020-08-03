@@ -79,37 +79,37 @@ class NonCompositedAnimations extends Audit {
     /** @type LH.Audit.Details.TableItem[] */
     const results = [];
     artifacts.TraceElements.forEach(element => {
-        if (element.traceEventType !== 'animation') return;
-        /** @type LH.Audit.Details.NodeValue */
-        const node = {
-          type: 'node',
-          path: element.devtoolsNodePath,
-          selector: element.selector,
-          nodeLabel: element.nodeLabel,
-          snippet: element.snippet,
-        };
+      if (element.traceEventType !== 'animation') return;
+      /** @type LH.Audit.Details.NodeValue */
+      const node = {
+        type: 'node',
+        path: element.devtoolsNodePath,
+        selector: element.selector,
+        nodeLabel: element.nodeLabel,
+        snippet: element.snippet,
+      };
 
-        const animations = element.animations || [];
-        const failureReasons = new Set();
-        for (const {name, failureReasonsMask} of animations) {
-          if (!failureReasonsMask) continue;
-          for (const failure of getActionableFailureReasons(failureReasonsMask)) {
-            failureReasons.add(failure + (name ? ` ("${name}")` : ''));
-          }
+      const animations = element.animations || [];
+      const failureReasons = new Set();
+      for (const {name, failureReasonsMask} of animations) {
+        if (!failureReasonsMask) continue;
+        for (const failure of getActionableFailureReasons(failureReasonsMask)) {
+          failureReasons.add(failure + (name ? ` ("${name}")` : ''));
         }
-        if (!failureReasons.size) return;
+      }
+      if (!failureReasons.size) return;
 
-        results.push({
-          node,
-          failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
-          subItems: {
-            type: 'subitems',
-            items: [...failureReasons].map(failureReason => {
-              return {failureReason};
-            }),
-          },
-        });
+      results.push({
+        node,
+        failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
+        subItems: {
+          type: 'subitems',
+          items: [...failureReasons].map(failureReason => {
+            return {failureReason};
+          }),
+        },
       });
+    });
 
     /** @type {LH.Audit.Details.Table['headings']} */
     const headings = [
