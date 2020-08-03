@@ -15,66 +15,66 @@ const {createMockSendCommandFn} = require('../mock-commands.js');
 
 const animationTrace = require('../../fixtures/traces/animation.json');
 
+function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) {
+  return {
+    name: 'LayoutShift',
+    cat: 'loading',
+    ph: 'I',
+    pid: 1111,
+    tid: 222,
+    ts: 1200,
+    args: {
+      data: {
+        had_recent_input,
+        impacted_nodes: impactedNodes,
+        score: score,
+      },
+      frame: '3C4CBF06AF1ED5B9EAA59BECA70111F4',
+    },
+  };
+}
+
+function makeAnimationTraceEvent(local, ph, data) {
+  return {
+    args: {
+      data,
+    },
+    cat: 'blink.animations,devtools.timeline,benchmark,rail',
+    id2: {
+      local,
+    },
+    name: 'Animation',
+    ph,
+    pid: 1111,
+    scope: 'blink.animations,devtools.timeline,benchmark,rail',
+    tid: 222,
+    ts: 1300,
+  };
+}
+
+function makeLCPTraceEvent(nodeId) {
+  return {
+    args: {
+      data: {
+        candidateIndex: 1,
+        isMainFrame: true,
+        navigationId: 'AB3DB6ED51813821034CE7325C0BAC6B',
+        nodeId,
+        size: 1212,
+        type: 'text',
+      },
+      frame: '3EFC2700D7BC3F4734CAF2F726EFB78C',
+    },
+    cat: 'loading,rail,devtools.timeline',
+    name: 'largestContentfulPaint::Candidate',
+    ph: 'R',
+    pid: 1111,
+    tid: 222,
+    ts: 1400,
+  };
+}
+
 describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
-  function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) {
-    return {
-      name: 'LayoutShift',
-      cat: 'loading',
-      ph: 'I',
-      pid: 1111,
-      tid: 222,
-      ts: 1200,
-      args: {
-        data: {
-          had_recent_input,
-          impacted_nodes: impactedNodes,
-          score: score,
-        },
-        frame: '3C4CBF06AF1ED5B9EAA59BECA70111F4',
-      },
-    };
-  }
-
-  function makeAnimationTraceEvent(local, ph, data) {
-    return {
-      args: {
-        data,
-      },
-      cat: 'blink.animations,devtools.timeline,benchmark,rail',
-      id2: {
-        local,
-      },
-      name: 'Animation',
-      ph,
-      pid: 1111,
-      scope: 'blink.animations,devtools.timeline,benchmark,rail',
-      tid: 222,
-      ts: 1300,
-    };
-  }
-
-  function makeLCPTraceEvent(nodeId) {
-    return {
-      args: {
-        data: {
-          candidateIndex: 1,
-          isMainFrame: true,
-          navigationId: 'AB3DB6ED51813821034CE7325C0BAC6B',
-          nodeId,
-          size: 1212,
-          type: 'text',
-        },
-        frame: '3EFC2700D7BC3F4734CAF2F726EFB78C',
-      },
-      cat: 'loading,rail,devtools.timeline',
-      name: 'largestContentfulPaint::Candidate',
-      ph: 'R',
-      pid: 1111,
-      tid: 222,
-      ts: 1400,
-    };
-  }
-
   /**
    * @param {Array<{nodeId: number, score: number}>} shiftScores
    */
@@ -314,7 +314,9 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     const total = sumScores(result);
     expectEqualFloat(total, 2.5);
   });
+});
 
+describe('Trace Elements gatherer - Animated Elements', () => {
   it('gets animated node ids with non-composited animations', async () => {
     const connectionStub = new Connection();
     connectionStub.sendCommand = createMockSendCommandFn()
