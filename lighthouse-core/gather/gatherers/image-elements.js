@@ -207,7 +207,7 @@ function findSizeDeclaration(style, property) {
  * @returns {string | undefined}
  */
 function findMostSpecificCSSRule(matchedCSSRules, property) {
-  /** @type {function(LH.Crdp.CSS.CSSStyle): string | undefined} */
+  /** @param {LH.Crdp.CSS.CSSStyle} declaration */
   const isDeclarationofInterest = (declaration) => findSizeDeclaration(declaration, property);
   const rule = FontSize.findMostSpecificMatchedCSSRule(matchedCSSRules, isDeclarationofInterest);
   if (!rule) return;
