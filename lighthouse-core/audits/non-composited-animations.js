@@ -77,12 +77,9 @@ class NonCompositedAnimations extends Audit {
     }
 
     /** @type LH.Audit.Details.TableItem[] */
-    const results = artifacts.TraceElements
-      .filter(element => {
-        return element.traceEventType === 'animation' &&
-          element.animations && element.animations.find(a => a.failureReasonsMask);
-      })
-      .map(element => {
+    const results = [];
+    artifacts.TraceElements.forEach(element => {
+        if (element.traceEventType !== 'animation') return;
         /** @type LH.Audit.Details.NodeValue */
         const node = {
           type: 'node',
@@ -100,8 +97,9 @@ class NonCompositedAnimations extends Audit {
             failureReasons.add(failure + (name ? ` ("${name}")` : ''));
           }
         }
+        if (!failureReasons.size) return;
 
-        return {
+        results.push({
           node,
           failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
           subItems: {
@@ -110,7 +108,7 @@ class NonCompositedAnimations extends Audit {
               return {failureReason};
             }),
           },
-        };
+        });
       });
 
     /** @type {LH.Audit.Details.Table['headings']} */

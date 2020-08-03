@@ -79,4 +79,28 @@ describe('Non-composited animations audit', () => {
     expect(auditResult.score).toEqual(1);
     expect(auditResult.details.items).toHaveLength(0);
   });
+
+  it('only surfaces actionable animation failure reasons', async () => {
+    const artifacts = {
+      TraceElements: [
+        {
+          traceEventType: 'animation',
+          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+          selector: 'body > div#animated-boi',
+          nodeLabel: 'div',
+          snippet: '<div id="animated-boi">',
+          nodeId: 4,
+          animations: [
+            {name: 'alpha', failureReasonsMask: 4}, // kInvalidAnimationOrEffect
+          ],
+        },
+      ],
+      HostUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
+    };
+
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
+    expect(auditResult.score).toEqual(1);
+    expect(auditResult.details.items).toHaveLength(0);
+  });
 });
