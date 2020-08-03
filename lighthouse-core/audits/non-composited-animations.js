@@ -94,19 +94,12 @@ class NonCompositedAnimations extends Audit {
 
         const animations = element.animations || [];
         const failureReasons = new Set();
-        animations.filter(({failureReasonsMask}) => failureReasonsMask)
-          .map(({name, failureReasonsMask}) => {
-            const failureStrings = getActionableFailureReasons(failureReasonsMask || 0);
-            return {
-              name,
-              failureStrings,
-            };
-          })
-          .forEach(({name, failureStrings}) => {
-            failureStrings.forEach(failureString => {
-              failureReasons.add(failureString + (name ? ` ("${name}")` : ''));
-            });
-          });
+        for (const {name, failureReasonsMask} of animations) {
+          if (!failureReasonsMask) continue;
+          for (const failure of getActionableFailureReasons(failureReasonsMask)) {
+            failureReasons.add(failure + (name ? ` ("${name}")` : ''));
+          }
+        }
 
         return {
           node,
