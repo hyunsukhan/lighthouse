@@ -76,7 +76,7 @@ setTimeout(() => {
   <!-- PASS(responsive): image is used at full size -->
   <!-- PASS(responsive-inverse): image is not visible -->
   <!-- FAIL(offscreen): image is offscreen -->
-  <!-- PASS(unsized-images): positioning is absolute -->
+  <!-- PASS(unsized-images): css position is absolute -->
   <img style="position: absolute; top: -10000px;" src="lighthouse-unoptimized.jpg">
 
   <!-- Image is cross-origin, which are disabled for now -->
@@ -139,7 +139,7 @@ setTimeout(() => {
   <!-- PASS(responsive): image is used at full size with srcset -->
   <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is onscreen -->
-  <!-- PASS(unsized-images): positioning is absolute -->
+  <!-- PASS(unsized-images): css position is absolute -->
   <img class="onscreen" sizes="(max-width: 2000px) 160px, 2048px" src="lighthouse-320x212-poor.jpg?srcset" srcset="lighthouse-480x320.webp?srcset 480w, lighthouse-2048x1356.webp?srcset 2048w">
 
   <!-- PASS(optimized): image is JPEG optimized -->
@@ -147,7 +147,7 @@ setTimeout(() => {
   <!-- PASS(responsive): image is used at full size with <picture> -->
   <!-- PASS(responsive-inverse): image is big enough -->
   <!-- PASS(offscreen): image is onscreen -->
-  <!-- PASS(unsized-images): positioning is absolute -->
+  <!-- PASS(unsized-images): css position is absolute -->
   <picture class="onscreen">
     <source media="(max-width: 2000px)" srcset="lighthouse-480x320.webp?picture">
     <source media="(min-width: 2001px)" srcset="lighthouse-2048x1356.webp?picture">
@@ -199,7 +199,7 @@ setTimeout(() => {
   <!-- PASS(responsive): image is used at full size -->
   <!-- FAIL(responsive-inverse): image does not account for DPR 2.625 -->
   <!-- PASS(offscreen): image is onscreen -->
-  <!-- PASS(unsized-images): positioning is absolute -->
+  <!-- PASS(unsized-images): css position is absolute -->
   <img class="onscreen" src="lighthouse-320x212-poor.jpg?duplicate">
 
   <!-- PASS(optimized): image is JPEG optimized -->
@@ -227,7 +227,7 @@ setTimeout(() => {
   <!-- PASS(optimized): image is WebP -->
   <!-- PASS(responsive): image is used at full size -->
   <!-- PASS(offscreen): image is lazily loaded after TTI -->
-  <!-- PASS(unsized-images): positioning is absolute -->
+  <!-- PASS(unsized-images): css position is absolute -->
   <img style="position: absolute; top: -5000px;" src="lighthouse-480x320.webp?lazilyLoaded=true">
 </template>
 

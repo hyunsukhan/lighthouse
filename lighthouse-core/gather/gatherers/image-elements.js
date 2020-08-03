@@ -31,13 +31,13 @@ function getClientRect(element) {
 }
 
 /**
- * If an image is within `picture`, the `picture` element's positioning
- * is what we want to collect, since that positioning is relevant to CLS.
+ * If an image is within `picture`, the `picture` element's css position
+ * is what we want to collect, since that position is relevant to CLS.
  * @param {Element} element
  * @param {CSSStyleDeclaration} computedStyle
  */
-function getPositioning(element, computedStyle) {
-  if (!!element.parentElement && element.parentElement.tagName === 'PICTURE') {
+function getPosition(element, computedStyle) {
+  if (element.parentElement && element.parentElement.tagName === 'PICTURE') {
     const parentStyle = window.getComputedStyle(element.parentElement);
     return parentStyle.getPropertyValue('position');
   }
@@ -70,7 +70,7 @@ function getHTMLImages(allElements) {
       attributeHeight: element.getAttribute('height') || '',
       cssWidth: '', // this will get overwritten below
       cssHeight: '', // this will get overwritten below
-      positioning: getPositioning(element, computedStyle),
+      cssComputedPosition: getPosition(element, computedStyle),
       isCss: false,
       // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
       loading: element.loading,
@@ -132,7 +132,7 @@ function getCSSImages(allElements) {
       attributeHeight: '',
       cssWidth: '',
       cssHeight: '',
-      positioning: getPositioning(element, style),
+      cssComputedPosition: getPosition(element, style),
       isCss: true,
       isPicture: false,
       isInShadowDOM: element.getRootNode() instanceof ShadowRoot,
@@ -192,8 +192,10 @@ function determineNaturalSize(url) {
  */
 function findSizeDeclaration(style, property) {
   if (!style) return;
+
   const definedProp = style.cssProperties.find(({name}) => name === property);
   if (!definedProp) return;
+
   return definedProp.value;
 }
 
@@ -209,6 +211,7 @@ function findMostSpecificCSSRule(matchedCSSRules, property) {
   const isDeclarationofInterest = (declaration) => findSizeDeclaration(declaration, property);
   const rule = FontSize.findMostSpecificMatchedCSSRule(matchedCSSRules, isDeclarationofInterest);
   if (!rule) return;
+
   // @ts-expect-error style is guaranteed to exist if a rule exists
   return findSizeDeclaration(rule.style, property);
 }
@@ -227,6 +230,7 @@ function getEffectiveSizingRule({attributesStyle, inlineStyle, matchedCSSRules},
 
   const attributeRule = findSizeDeclaration(attributesStyle, property);
   if (attributeRule) return attributeRule;
+
   // Rules directly referencing the node come next.
   const matchedRule = findMostSpecificCSSRule(matchedCSSRules, property);
   if (matchedRule) return matchedRule;
@@ -274,6 +278,7 @@ class ImageElements extends Gatherer {
         path: devtoolsNodePath,
       });
       if (!nodeId) return;
+
       const matchedRules = await driver.sendCommand('CSS.getMatchedStylesForNode', {
         nodeId: nodeId,
       });
@@ -311,7 +316,7 @@ class ImageElements extends Gatherer {
       ${pageFunctions.getNodeLabelString};
       ${pageFunctions.getOuterHTMLSnippetString};
       ${getClientRect.toString()};
-      ${getPositioning.toString()};
+      ${getPosition.toString()};
       ${getHTMLImages.toString()};
       ${getCSSImages.toString()};
       ${collectImageElementInfo.toString()};

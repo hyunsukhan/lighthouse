@@ -20,7 +20,7 @@ const UIStrings = {
   /** Title of a Lighthouse audit that provides detail on whether all images have explicit width and height. This descriptive title is shown to users when one or more images does not have explicit width and height */
   failureTitle: 'Image elements do not have explicit `width` and `height`',
   /** Description of a Lighthouse audit that tells the user why they should include explicit width and height for all images. This is displayed after a user expands the section to see more. No character length limits. 'Learn More' becomes link text to additional documentation. */
-  description: 'Include explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)',
+  description: 'Set an explicit width and height on image elements to reduce layout shifts and improve CLS. [Learn more](https://web.dev/optimize-cls/#images-without-dimensions)',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -91,9 +91,10 @@ class UnsizedImages extends Audit {
     const unsizedImages = [];
 
     for (const image of images) {
-      const positioning = image.positioning;
-      const isFixedImage = positioning === 'fixed' || positioning === 'absolute';
-      if (UnsizedImages.isSizedImage(image) || isFixedImage) continue;
+      const isFixedImage =
+      image.cssComputedPosition === 'fixed' || image.cssComputedPosition === 'absolute';
+
+      if (isFixedImage || UnsizedImages.isSizedImage(image)) continue;
       const url = URL.elideDataURI(image.src);
       unsizedImages.push({
         url,
