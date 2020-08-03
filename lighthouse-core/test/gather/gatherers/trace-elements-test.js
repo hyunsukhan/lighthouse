@@ -13,6 +13,8 @@ const Connection = require('../../../gather/connections/connection.js');
 const createTestTrace = require('../../create-test-trace.js');
 const {createMockSendCommandFn} = require('../mock-commands.js');
 
+const animationTrace = require('../../fixtures/traces/animation.json');
+
 describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
   function makeLayoutShiftTraceEvent(score, impactedNodes, had_recent_input = false) {
     return {
@@ -485,6 +487,113 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
         ...animationNodeData,
         animations: [
           {name: 'example', failureReasonsMask: 8192},
+        ],
+        nodeId: 5,
+      },
+    ]);
+  });
+
+  it('properly resolves all animated elements in real trace', async () => {
+    const LCPNodeData = {
+      traceEventType: 'largest-contentful-paint',
+      devtoolsNodePath: '1,HTML,1,BODY,2,DIV',
+      selector: 'body > div',
+      nodeLabel: 'AAAAAAAAAAAAAAAAAAAAAAA',
+      snippet: '<div>',
+      boundingRect: {
+        top: 269,
+        bottom: 287,
+        left: 8,
+        right: 972,
+        width: 964,
+        height: 18,
+      },
+    };
+    const animationNodeData = {
+      traceEventType: 'animation',
+      devtoolsNodePath: '1,HTML,1,BODY,0,DIV',
+      selector: 'body > div#animated-boi',
+      nodeLabel: 'div',
+      snippet: '<div id="animated-boi">',
+      boundingRect: {
+        top: 8,
+        bottom: 169,
+        left: 8,
+        right: 155,
+        width: 147,
+        height: 161,
+      },
+    };
+    const compositedNodeData = {
+      traceEventType: 'animation',
+      devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+      selector: 'body > div#composited-boi',
+      nodeLabel: 'div',
+      snippet: '<div id="composited-boi">',
+      boundingRect: {
+        top: 169,
+        bottom: 269,
+        left: 8,
+        right: 108,
+        width: 100,
+        height: 100,
+      },
+    };
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = createMockSendCommandFn()
+      // LCP node
+      .mockResponse('DOM.resolveNode', {object: {objectId: 1}})
+      .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}})
+      // Animated node
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 2}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: ''},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 3}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'alpha'},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 4}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'beta'},
+      }]})
+      .mockResponse('DOM.resolveNode', {object: {objectId: 5}})
+      .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}})
+      // Composited node
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 6}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'gamma'},
+      }]})
+      .mockResponse('DOM.resolveNode', {object: {objectId: 7}})
+      .mockResponse('Runtime.callFunctionOn', {result: {value: compositedNodeData}});
+
+    const driver = new Driver(connectionStub);
+    const gatherer = new TraceElementsGatherer();
+
+    const result = await gatherer.afterPass({driver}, {trace: animationTrace});
+
+    expect(result).toEqual([
+      {
+        ...LCPNodeData,
+        nodeId: 7,
+      },
+      {
+        ...animationNodeData,
+        animations: [
+          {failureReasonsMask: 8224},
+          {name: 'alpha', failureReasonsMask: 8224},
+          {name: 'beta', failureReasonsMask: 8224},
+        ],
+        nodeId: 4,
+      },
+      {
+        ...compositedNodeData,
+        animations: [
+          {name: 'gamma', failureReasonsMask: 0},
         ],
         nodeId: 5,
       },
