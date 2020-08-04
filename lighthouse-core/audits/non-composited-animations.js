@@ -80,6 +80,7 @@ class NonCompositedAnimations extends Audit {
 
     /** @type LH.Audit.Details.TableItem[] */
     const results = [];
+    let hasDisplayNames = false;
     artifacts.TraceElements.forEach(element => {
       if (element.traceEventType !== 'animation') return;
       /** @type LH.Audit.Details.NodeValue */
@@ -96,6 +97,9 @@ class NonCompositedAnimations extends Audit {
       for (const {name, failureReasonsMask} of animations) {
         if (!failureReasonsMask) continue;
         for (const failureReason of getActionableFailureReasons(failureReasonsMask)) {
+          if (name) {
+            hasDisplayNames = true;
+          }
           const reasons = animationReasons.get(name) || new Set();
           reasons.add(failureReason);
           animationReasons.set(name, reasons);
@@ -126,9 +130,16 @@ class NonCompositedAnimations extends Audit {
     const headings = [
       /* eslint-disable max-len */
       {key: 'node', itemType: 'node', subItemsHeading: {key: 'failureReason', itemType: 'text'}, text: str_(i18n.UIStrings.columnElement)},
-      {key: null, itemType: 'text', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnName)},
       /* eslint-enable max-len */
     ];
+
+    if (hasDisplayNames) {
+      headings.push(
+        /* eslint-disable max-len */
+        {key: null, itemType: 'text', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnName)}
+        /* eslint-enable max-len */
+      );
+    }
 
     const details = Audit.makeTableDetails(headings, results);
 

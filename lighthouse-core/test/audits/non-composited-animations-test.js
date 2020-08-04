@@ -33,6 +33,7 @@ describe('Non-composited animations audit', () => {
 
     const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
     expect(auditResult.score).toEqual(0);
+    expect(auditResult.details.headings).toHaveLength(2);
     expect(auditResult.displayValue).toBeDisplayString('1 animated element found');
     expect(auditResult.details.items).toHaveLength(1);
     expect(auditResult.details.items[0].node).toEqual({
@@ -93,6 +94,7 @@ describe('Non-composited animations audit', () => {
 
     const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
     expect(auditResult.score).toEqual(0);
+    expect(auditResult.details.headings).toHaveLength(1);
     expect(auditResult.displayValue).toBeDisplayString('2 animated elements found');
     expect(auditResult.details.items).toHaveLength(2);
     expect(auditResult.details.items[0].node).toEqual({
