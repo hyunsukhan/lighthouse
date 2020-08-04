@@ -971,6 +971,9 @@
   "lighthouse-core/audits/non-composited-animations.js | title": {
     "message": "Avoid non-composited animations"
   },
+  "lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty": {
+    "message": "Unsupported CSS Property"
+  },
   "lighthouse-core/audits/offline-start-url.js | description": {
     "message": "A service worker enables your web app to be reliable in unpredictable network conditions. [Learn more](https://web.dev/offline-start-url/)."
   },
