@@ -321,9 +321,18 @@ module.exports = [
                 },
                 subItems: {
                   items: [
-                    {failureReason: 'Unsupported CSS Property'}, // From JavaScript `.animate` which has no animation display name
-                    {failureReason: 'Unsupported CSS Property ("alpha")'},
-                    {failureReason: 'Unsupported CSS Property ("beta")'},
+                    {
+                      // From JavaScript `.animate` which has no animation display name
+                      failureReason: 'Unsupported CSS Property',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property',
+                      animation: 'alpha',
+                    },
+                    {
+                      failureReason: 'Unsupported CSS Property',
+                      animation: 'beta',
+                    },
                   ],
                 },
               },

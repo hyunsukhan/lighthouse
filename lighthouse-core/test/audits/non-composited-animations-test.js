@@ -44,13 +44,18 @@ describe('Non-composited animations audit', () => {
     });
     expect(auditResult.details.items[0].subItems.items).toEqual([
       {
-        failureReason: 'Unsupported CSS Property',
+        failureReason:
+          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
       },
       {
-        failureReason: 'Unsupported CSS Property ("alpha")',
+        failureReason:
+          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
+        animation: 'alpha',
       },
       {
-        failureReason: 'Unsupported CSS Property ("beta")',
+        failureReason:
+          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
+        animation: 'beta',
       },
     ]);
   });

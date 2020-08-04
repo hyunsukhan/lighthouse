@@ -19,6 +19,8 @@ const UIStrings = {
   =1 {# animated element found}
   other {# animated elements found}
   }`,
+  /** Name of a compositor failure reason where the CSS property being animated is not supported on the compositor. */
+  unsupportedCSSProperty: 'Unsupported CSS Property',
 };
 
 const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
@@ -31,7 +33,7 @@ const str_ = i18n.createMessageInstanceIdFn(__filename, UIStrings);
 const ACTIONABLE_FAILURE_REASONS = [
   {
     flag: 1 << 13,
-    text: 'Unsupported CSS Property',
+    text: str_(UIStrings.unsupportedCSSProperty),
   },
 ];
 
@@ -93,20 +95,17 @@ class NonCompositedAnimations extends Audit {
       const failureReasons = new Set();
       for (const {name, failureReasonsMask} of animations) {
         if (!failureReasonsMask) continue;
-        for (const failure of getActionableFailureReasons(failureReasonsMask)) {
-          failureReasons.add(failure + (name ? ` ("${name}")` : ''));
+        for (const failureReason of getActionableFailureReasons(failureReasonsMask)) {
+          failureReasons.add({failureReason, animation: name});
         }
       }
       if (!failureReasons.size) return;
 
       results.push({
         node,
-        failureReasons: '', // TODO: Use for node specific failure reasons (e.g. incompatible animations)
         subItems: {
           type: 'subitems',
-          items: [...failureReasons].map(failureReason => {
-            return {failureReason};
-          }),
+          items: [...failureReasons],
         },
       });
     });
@@ -115,6 +114,7 @@ class NonCompositedAnimations extends Audit {
     const headings = [
       /* eslint-disable max-len */
       {key: 'node', itemType: 'node', subItemsHeading: {key: 'failureReason', itemType: 'text'}, text: str_(i18n.UIStrings.columnElement)},
+      {key: null, itemType: 'text', subItemsHeading: {key: 'animation', itemType: 'text'}, text: str_(i18n.UIStrings.columnName)},
       /* eslint-enable max-len */
     ];
 
