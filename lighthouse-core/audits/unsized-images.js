@@ -92,7 +92,7 @@ class UnsizedImages extends Audit {
 
     for (const image of images) {
       const isFixedImage =
-      image.cssComputedPosition === 'fixed' || image.cssComputedPosition === 'absolute';
+        image.cssComputedPosition === 'fixed' || image.cssComputedPosition === 'absolute';
 
       if (isFixedImage || UnsizedImages.isSizedImage(image)) continue;
       const url = URL.elideDataURI(image.src);
