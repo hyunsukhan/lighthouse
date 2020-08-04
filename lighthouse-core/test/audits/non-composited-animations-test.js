@@ -60,6 +60,69 @@ describe('Non-composited animations audit', () => {
     ]);
   });
 
+  it('properly removes duplicate reasons', async () => {
+    const artifacts = {
+      TraceElements: [
+        {
+          traceEventType: 'animation',
+          devtoolsNodePath: '1,HTML,1,BODY,1,DIV',
+          selector: 'body > div#animated-1',
+          nodeLabel: 'div',
+          snippet: '<div id="animated-1">',
+          nodeId: 4,
+          animations: [
+            {failureReasonsMask: 8192},
+            {failureReasonsMask: 8192},
+          ],
+        },
+        {
+          traceEventType: 'animation',
+          devtoolsNodePath: '1,HTML,1,BODY,2,DIV',
+          selector: 'body > div#animated-2',
+          nodeLabel: 'div',
+          snippet: '<div id="animated-2">',
+          nodeId: 5,
+          animations: [
+            {failureReasonsMask: 8192},
+          ],
+        },
+      ],
+      HostUserAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_6) ' +
+        'AppleWebKit/537.36 (KHTML, like Gecko) Chrome/86.0.4216.0 Safari/537.36',
+    };
+
+    const auditResult = await NonCompositedAnimationsAudit.audit(artifacts);
+    expect(auditResult.score).toEqual(0);
+    expect(auditResult.displayValue).toBeDisplayString('2 animated elements found');
+    expect(auditResult.details.items).toHaveLength(2);
+    expect(auditResult.details.items[0].node).toEqual({
+      type: 'node',
+      path: '1,HTML,1,BODY,1,DIV',
+      selector: 'body > div#animated-1',
+      nodeLabel: 'div',
+      snippet: '<div id="animated-1">',
+    });
+    expect(auditResult.details.items[1].node).toEqual({
+      type: 'node',
+      path: '1,HTML,1,BODY,2,DIV',
+      selector: 'body > div#animated-2',
+      nodeLabel: 'div',
+      snippet: '<div id="animated-2">',
+    });
+    expect(auditResult.details.items[0].subItems.items).toEqual([
+      {
+        failureReason:
+          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
+      },
+    ]);
+    expect(auditResult.details.items[1].subItems.items).toEqual([
+      {
+        failureReason:
+          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
+      },
+    ]);
+  });
+
   it('does not surface composited animation', async () => {
     const artifacts = {
       TraceElements: [
