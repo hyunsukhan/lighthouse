@@ -68,8 +68,8 @@ function getHTMLImages(allElements) {
       naturalHeight: element.naturalHeight,
       attributeWidth: element.getAttribute('width') || '',
       attributeHeight: element.getAttribute('height') || '',
-      cssWidth: '', // this will get overwritten below
-      cssHeight: '', // this will get overwritten below
+      cssWidth: undefined, // this will get overwritten below
+      cssHeight: undefined, // this will get overwritten below
       cssComputedPosition: getPosition(element, computedStyle),
       isCss: false,
       // @ts-expect-error: loading attribute not yet added to HTMLImageElement definition.
@@ -130,8 +130,8 @@ function getCSSImages(allElements) {
       naturalHeight: 0,
       attributeWidth: '',
       attributeHeight: '',
-      cssWidth: '',
-      cssHeight: '',
+      cssWidth: undefined,
+      cssHeight: undefined,
       cssComputedPosition: getPosition(element, style),
       isCss: true,
       isPicture: false,
