@@ -205,7 +205,7 @@ class TraceElements extends Gatherer {
 
     /** @type Map<number, Set<{animationId: string, failureReasonsMask?: number}>> */
     const elementAnimations = new Map();
-    for (const [, {begin, status}] of animationPairs) {
+    for (const {begin, status} of animationPairs.values()) {
       const nodeId = this.getNodeIDFromTraceEvent(begin);
       const animationId = this.getAnimationIDFromTraceEvent(begin);
       const failureReasonsMask = this.getFailureReasonsFromTraceEvent(status);
