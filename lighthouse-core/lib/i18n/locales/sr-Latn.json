@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Izbegavajte traženje dozvole za obaveštenja pri učitavanju stranice"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementi koji nisu prošli proveru"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Sprečavanje lepljenja lozinke narušava dobre smernice za bezbednost. [Saznajte više](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

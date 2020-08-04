@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Nepožaduje povolenie na upozornenie pri načítaní stránky"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Prvky s chybami"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Ak zakážete prilepovanie hesiel, zhoršíte kvalitu zabezpečenia. [Ďalšie informácie](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

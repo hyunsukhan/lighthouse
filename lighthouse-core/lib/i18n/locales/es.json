@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita solicitar el permiso de notificación al cargar la página"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementos con errores"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Evitar que se pueda pegar texto en el campo de contraseña debilita una buena política de seguridad. [Más información](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

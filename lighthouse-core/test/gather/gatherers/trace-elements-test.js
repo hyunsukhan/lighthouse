@@ -319,17 +319,40 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
     expectEqualFloat(total, 2.5);
   });
 
-  it('gets animated node ids without duplicates', () => {
+  it('gets animated node ids with multiple animations', async () => {
+    const connectionStub = new Connection();
+    connectionStub.sendCommand = createMockSendCommandFn()
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 1}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'alpha'},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 2}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'beta'},
+      }]})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 3}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'gamma'},
+      }]});
+    const driver = new Driver(connectionStub);
     const traceEvents = [
       makeAnimationTraceEvent('1', 5),
       makeAnimationTraceEvent('2', 5),
       makeAnimationTraceEvent('3', 6),
     ];
 
-    const result = TraceElementsGatherer.getAnimatedElements(traceEvents);
+    const result = await TraceElementsGatherer.getAnimatedElements({driver}, traceEvents);
     expect(result).toEqual([
-      {nodeId: 5},
-      {nodeId: 6},
+      {nodeId: 5, animations: [
+        {id: '1', name: 'alpha'},
+        {id: '2', name: 'beta'},
+      ]},
+      {nodeId: 6, animations: [
+        {id: '3', name: 'gamma'},
+      ]},
     ]);
   });
 
@@ -385,6 +408,11 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       .mockResponse('Runtime.callFunctionOn', {result: {value: LCPNodeData}})
       .mockResponse('DOM.resolveNode', {object: {objectId: 2}})
       .mockResponse('Runtime.callFunctionOn', {result: {value: layoutShiftNodeData}})
+      .mockResponse('Animation.resolveAnimation', {remoteObject: {objectId: 4}})
+      .mockResponse('Runtime.getProperties', {result: [{
+        name: 'animationName',
+        value: {type: 'string', value: 'example'},
+      }]})
       .mockResponse('DOM.resolveNode', {object: {objectId: 3}})
       .mockResponse('Runtime.callFunctionOn', {result: {value: animationNodeData}});
     const driver = new Driver(connectionStub);
@@ -417,6 +445,9 @@ describe('Trace Elements gatherer - GetTopLayoutShiftElements', () => {
       },
       {
         ...animationNodeData,
+        animations: [
+          {id: '1', name: 'example'},
+        ],
         nodeId: 5,
       },
     ]);

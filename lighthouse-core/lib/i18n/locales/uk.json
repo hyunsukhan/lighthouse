@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Уникає надсилання запитів на показ сповіщень під час завантаження сторінки"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Відхилені елементи"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Якщо заборонити вставляти пароль, це порушить правила щодо високого рівня безпеки. [Докладніше](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

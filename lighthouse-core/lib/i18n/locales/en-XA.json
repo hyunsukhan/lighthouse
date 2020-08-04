@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "[Åvöîðš ŕéqûéšţîñĝ ţĥé ñöţîƒîçåţîöñ þéŕmîššîöñ öñ þåĝé ļöåð one two three four five six seven eight nine ten eleven twelve]"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "[Fåîļîñĝ Éļéméñţš one two]"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "[Þŕévéñţîñĝ þåššŵöŕð þåšţîñĝ ûñðéŕmîñéš ĝööð šéçûŕîţý þöļîçý. ᐅ[ᐊĻéåŕñ möŕéᐅ](https://web.dev/password-inputs-can-be-pasted-into/)ᐊ. one two three four five six seven eight nine ten eleven twelve thirteen fourteen]"
   },

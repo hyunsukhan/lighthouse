@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Unngår å spørre om varseltillatelsen ved sideinnlasting"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementer som ikke besto kontrollen"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Å hindre brukere i å lime inn passord underminerer gode retningslinjer for sikkerhet. [Finn ut mer](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

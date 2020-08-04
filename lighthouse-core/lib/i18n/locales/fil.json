@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Iniiwasan ang paghiling ng pahintulot sa notification sa pag-load ng page"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Mga Hindi Nakapasang Element"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Pinapahina ng paghadlang sa pag-paste ng password ang magandang patakarang panseguridad. [Matuto pa](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

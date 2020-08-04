@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "หลีกเลี่ยงการขอสิทธิ์การแจ้งเตือนในการโหลดหน้าเว็บ"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "องค์ประกอบที่ไม่ผ่านการตรวจสอบ"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "การป้องกันการวางรหัสผ่านทำให้นโยบายความปลอดภัยที่ดีอ่อนแอลง [ดูข้อมูลเพิ่มเติม](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

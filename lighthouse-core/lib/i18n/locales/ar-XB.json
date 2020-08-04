@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "‏‮Avoids‬‏ ‏‮requesting‬‏ ‏‮the‬‏ ‏‮notification‬‏ ‏‮permission‬‏ ‏‮on‬‏ ‏‮page‬‏ ‏‮load‬‏"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "‏‮Failing‬‏ ‏‮Elements‬‏"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "‏‮Preventing‬‏ ‏‮password‬‏ ‏‮pasting‬‏ ‏‮undermines‬‏ ‏‮good‬‏ ‏‮security‬‏ ‏‮policy‬‏. [‏‮Learn‬‏ ‏‮more‬‏](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

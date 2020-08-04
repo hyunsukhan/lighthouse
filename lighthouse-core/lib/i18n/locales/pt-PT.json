@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Evita a solicitação da autorização de notificações no carregamento da página"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elementos reprovados"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Impedir a colagem de palavras-passe compromete o cumprimento de uma política de segurança adequada. [Saiba mais](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

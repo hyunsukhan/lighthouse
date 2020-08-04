@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Nežádá při načtení stránky o oprávnění zobrazovat oznámení"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Prvky, které neprošly"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Blokování vkládání hesel je v rozporu s dobrými bezpečnostními zásadami. [Další informace](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

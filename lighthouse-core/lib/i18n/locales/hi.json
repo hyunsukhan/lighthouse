@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "पेज लोड पर सूचना भेजने की मंज़ूरी का अनुरोध नहीं किया जाता"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "फ़ेल होने वाले एलिमेंट"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "पासवर्ड वाले फ़ील्ड में कुछ कॉपी करके चिपकाने की सुविधा न लागू करने का मतलब है एक अच्छी सुरक्षा नीति को कमज़ोर समझना. [ज़्यादा जानें](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

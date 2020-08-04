@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Разрешение на отправку уведомлений не запрашивается при загрузке страницы"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Элементы, запрещающие вставку из буфера обмена"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Запрет на вставку пароля из буфера обмена отрицательно сказывается на безопасности пользователей. [Подробнее…](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

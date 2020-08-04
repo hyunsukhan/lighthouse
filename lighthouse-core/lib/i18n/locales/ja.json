@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "ページの読み込み時に通知の許可はリクエストされません"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "問題のある要素"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "パスワードの貼り付けを禁止すると、良好なセキュリティ ポリシーが損なわれます。[詳細](https://web.dev/password-inputs-can-be-pasted-into/)"
   },

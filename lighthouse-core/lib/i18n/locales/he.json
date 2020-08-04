@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "הדף לא מבקש הרשאה להתראות במהלך טעינת הדף"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "רכיבים שנכשלו בבדיקה"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "מניעה של הדבקת סיסמאות פוגעת ביכולת לקיים מדיניות אבטחה טובה. [מידע נוסף](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

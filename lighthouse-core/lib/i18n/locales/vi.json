@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Tránh yêu cầu quyền truy cập thông báo khi tải trang"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Các phần tử không đạt"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Việc ngăn dán mật khẩu sẽ làm giảm tác dụng của chính sách bảo mật hiệu quả. [Tìm hiểu thêm](https://web.dev/password-inputs-can-be-pasted-into/)."
   },

@@ -689,9 +689,6 @@
   "lighthouse-core/audits/dobetterweb/notification-on-start.js | title": {
     "message": "Menghindari meminta izin notifikasi pada pemuatan halaman"
   },
-  "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | columnFailingElem": {
-    "message": "Elemen yang Gagal"
-  },
   "lighthouse-core/audits/dobetterweb/password-inputs-can-be-pasted-into.js | description": {
     "message": "Mencegah menempelkan sandi akan merusak kebijakan keamanan yang baik. [Pelajari lebih lanjut](https://web.dev/password-inputs-can-be-pasted-into/)."
   },
