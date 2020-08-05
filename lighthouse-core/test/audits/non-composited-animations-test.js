@@ -43,22 +43,18 @@ describe('Non-composited animations audit', () => {
       nodeLabel: 'div',
       snippet: '<div id="animated-boi">',
     });
-    expect(auditResult.details.items[0].subItems.items).toEqual([
-      {
-        failureReason:
-          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
-      },
-      {
-        failureReason:
-          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
-        animation: 'alpha',
-      },
-      {
-        failureReason:
-          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
-        animation: 'beta',
-      },
-    ]);
+    expect(auditResult.details.items[0].subItems.items[0].failureReason)
+      .toBeDisplayString('Unsupported CSS Property');
+    expect(auditResult.details.items[0].subItems.items[0].animation)
+      .toBeUndefined();
+    expect(auditResult.details.items[0].subItems.items[1].failureReason)
+      .toBeDisplayString('Unsupported CSS Property');
+    expect(auditResult.details.items[0].subItems.items[1].animation)
+      .toEqual('alpha');
+    expect(auditResult.details.items[0].subItems.items[2].failureReason)
+      .toBeDisplayString('Unsupported CSS Property');
+    expect(auditResult.details.items[0].subItems.items[2].animation)
+      .toEqual('beta');
   });
 
   it('properly removes duplicate reasons', async () => {
@@ -111,8 +107,14 @@ describe('Non-composited animations audit', () => {
       nodeLabel: 'div',
       snippet: '<div id="animated-2">',
     });
-    expect(auditResult.details.items[0].subItems.items[0].failureReason).toBeDisplayString('Unsupported CSS Property')
-    expect(auditResult.details.items[0].subItems.items[1].failureReason).toBeDisplayString('Unsupported CSS Property')
+    expect(auditResult.details.items[0].subItems.items[0].failureReason)
+      .toBeDisplayString('Unsupported CSS Property');
+    expect(auditResult.details.items[0].subItems.items[0].animation)
+      .toBeUndefined();
+    expect(auditResult.details.items[1].subItems.items[0].failureReason)
+      .toBeDisplayString('Unsupported CSS Property');
+    expect(auditResult.details.items[1].subItems.items[0].animation)
+      .toBeUndefined();
   });
 
   it('does not surface composited animation', async () => {
