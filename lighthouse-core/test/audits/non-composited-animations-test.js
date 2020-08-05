@@ -111,18 +111,8 @@ describe('Non-composited animations audit', () => {
       nodeLabel: 'div',
       snippet: '<div id="animated-2">',
     });
-    expect(auditResult.details.items[0].subItems.items).toEqual([
-      {
-        failureReason:
-          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
-      },
-    ]);
-    expect(auditResult.details.items[1].subItems.items).toEqual([
-      {
-        failureReason:
-          'lighthouse-core/audits/non-composited-animations.js | unsupportedCSSProperty # 0',
-      },
-    ]);
+    expect(auditResult.details.items[0].subItems.items[0].failureReason).toBeDisplayString('Unsupported CSS Property')
+    expect(auditResult.details.items[0].subItems.items[1].failureReason).toBeDisplayString('Unsupported CSS Property')
   });
 
   it('does not surface composited animation', async () => {
